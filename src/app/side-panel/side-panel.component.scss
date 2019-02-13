@@ -1,0 +1,15 @@
+.sidepanel {
+    height: 100vh;
+
+    &__search {
+        height: 5rem;
+        background: #5B7A59;
+        display: flex;
+        align-items: center;
+        color: #fff;
+
+        & > * {
+            padding: 0 1rem;
+        }
+    }
+}

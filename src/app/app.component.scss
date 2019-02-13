@@ -1,0 +1,13 @@
+.app-container {
+    display: grid;
+    grid-template-columns: 24rem 1fr ;
+}
+
+app-sidepanel {
+    background: greenyellow;
+}
+
+app-header {
+    background: orangered;
+}
+
