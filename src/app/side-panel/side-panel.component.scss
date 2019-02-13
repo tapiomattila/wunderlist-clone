@@ -7,9 +7,56 @@
         display: flex;
         align-items: center;
         color: #fff;
+        justify-content: space-between;
 
         & > * {
             padding: 0 1rem;
+        }
+
+        // Menu button
+        .menu-btn {
+            cursor: pointer;
+            padding-top:.6rem;
+
+            &__btn-line {
+                width: 2.2rem;
+                height: .13rem;
+                margin: 0 0 5px 0;
+                background: #FAFBFA;
+            }
+        }
+
+        .sidepanel-input {
+            padding: 0;
+
+            input {
+                width: 98%;
+                background: transparent;
+                border: none;
+                font-size: 2rem;
+
+                &:focus {
+                    outline: none;
+                    border:none;
+                    caret-color: #FAFBFA;
+                }
+            }
+
+            input::-webkit-input-placeholder {
+                color: #999;
+            }
+            input:focus::-webkit-input-placeholder {
+                color: red;
+            }
+        }
+
+        .magnifying-glass {
+            font-size: 2rem;
+            font-weight: 100;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }
