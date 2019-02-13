@@ -59,4 +59,26 @@
             }
         }
     }
+
+    .sidepanel-categories {
+
+        min-height: calc(100vh - 5rem);
+        display: flex;
+        flex-direction: column;
+
+        justify-content: space-between;
+
+        .sidepanel-create-new {
+            padding:.4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgb(60, 129, 233);
+
+            a {
+                text-decoration: none;
+            }
+        }
+
+    }
 }

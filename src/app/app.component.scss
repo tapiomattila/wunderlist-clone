@@ -1,13 +1,46 @@
 .app-container {
+    // display: grid;
+    // grid-template-columns: 26rem 1fr ;
+    
     display: grid;
-    grid-template-columns: 26rem 1fr ;
+    grid-template-areas:
+    'search header'
+    'search maincontent';
+
+    grid-template-columns: 24rem 1fr;
+    grid-template-rows: 5rem 1fr;
 }
 
 app-sidepanel {
-    background: greenyellow;
+    background: #fff;
+    grid-area: search;
 }
 
 app-header {
-    background: orangered;
+    grid-area: header;
+}
+
+.main-content {
+    grid-area: maincontent;
+
+    overflow: hidden;
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/e3/Seattle_Kerry_Park_Skyline.jpg);
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    // height: 1400px;
+    height: 100%;
+
+    #overlay-main-content {
+        position: fixed;
+        display: initial;
+        width: 100%;
+        height: 100%;
+        top: 5rem;
+        left: 24rem;
+        background-color: rgba(255, 102, 0, 0.3);
+        // z-index: 2;
+    }
 }
 
