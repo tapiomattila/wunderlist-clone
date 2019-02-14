@@ -15,7 +15,73 @@
 
     .sidepanel-header {
         height: 5rem;
-        background: rgb(142, 206, 142);
+        // background: rgb(142, 206, 142);
+        display: flex;
+        align-items: center;
+        width: 100%;
+        // background: yellow;
+
+        .profile {
+
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // background: red;
+
+            .img-dropdown {
+                display: flex;
+                padding-left:.5rem;
+                align-items: center;
+                padding-right:2.5rem;
+
+                &:hover {
+                    background: lighten($color: #F7F7F7, $amount: 3);
+                    cursor: pointer;
+                }
+              
+
+                // background: green;
+                .img {
+                    background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Alesso_profile.png/467px-Alesso_profile.png);
+                    height: 4rem;
+                    width: 4rem;
+                    border-radius: 50%;
+                    background-position: top;
+                    background-size: cover;
+                }
+
+                .profile-drd {
+                    font-size:1.4rem;
+                    padding-left: .5rem;
+
+                    i {
+                        color:rgb(187, 187, 187);
+                    }
+                }
+            }
+
+            .notification-msg {
+                display: flex;
+
+                color:rgb(187, 187, 187);
+                padding-right: 1rem;
+
+                .notification {
+                    padding-right: 1.8rem;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                .msg {
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
     }
 
     .sidepanel-content {
@@ -43,7 +109,7 @@
                         background-color: #E0EEFA;
                         cursor: pointer;
                     }
-                    
+
                     .list-item {
 
                         display: flex;
