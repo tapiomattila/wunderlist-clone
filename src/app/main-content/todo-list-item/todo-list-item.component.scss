@@ -1,0 +1,15 @@
+
+li {
+    position: relative;
+    padding: .4rem;
+    margin: .8rem 0;
+    border-radius: .4rem;
+    background-color: #fff;
+    z-index: 3;
+
+    &:hover {
+        background-color: #E0EEFA;
+        cursor: pointer;
+    }
+}
+

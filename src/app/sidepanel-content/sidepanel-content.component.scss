@@ -101,40 +101,38 @@
                 margin: 0;
                 list-style: none;
 
-                li {
+                .list-item {
 
+                    height: 4rem;
                     padding: 1rem 1.2rem;
+
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
 
                     &:hover {
                         background-color: #E0EEFA;
                         cursor: pointer;
                     }
 
-                    .list-item {
-
+                    .icon-and-name {
                         display: flex;
-                        justify-content: space-between;
-                        align-items: center;
 
-                        .icon-and-name {
-                            display: flex;
-
-                            p {
-                                padding-left:1rem;
-                            }
-
-                            i {
-                                color: rgb(110, 202, 255);
-                            }
+                        p {
+                            padding-left:1rem;
                         }
 
-                        .count {
-                            font-size:1.2rem;
-                            font-family: Arial, Helvetica, sans-serif;
+                        i {
+                            color: rgb(110, 202, 255);
                         }
                     }
-                    
+
+                    .count {
+                        font-size:1.2rem;
+                        font-family: Arial, Helvetica, sans-serif;
+                    }
                 }
+
             }
         }
     }

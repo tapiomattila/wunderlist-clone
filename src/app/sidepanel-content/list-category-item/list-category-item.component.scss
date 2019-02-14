@@ -1,0 +1,39 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.list-item {
+
+    height: 4rem;
+    padding: 1rem 1.2rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+        background-color: #E0EEFA;
+        cursor: pointer;
+    }
+
+    .icon-and-name {
+        display: flex;
+        align-items: center;
+
+        p {
+            padding-left:1rem;
+        }
+
+        i {
+            color: rgb(110, 202, 255);
+        }
+    }
+
+    .count {
+        font-size:1.2rem;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+}
