@@ -1,4 +1,10 @@
 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 .sidepanel-categories {
 
     min-height: calc(100vh - 5rem);
@@ -20,21 +26,56 @@
         right:0px;
         bottom:3.5rem;
         overflow-y:scroll;
-        width: 25rem; 
-
-        background: rgb(72, 150, 72);
+        width: 25rem;
 
         .sidepanel-items {
-            // height: 100%;
-            // background: rgb(228, 225, 89);
+
+            ul {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+
+                li {
+
+                    padding: 1rem 1.2rem;
+
+                    &:hover {
+                        background-color: #E0EEFA;
+                        cursor: pointer;
+                    }
+                    
+                    .list-item {
+
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .icon-and-name {
+                            display: flex;
+
+                            p {
+                                padding-left:1rem;
+                            }
+
+                            i {
+                                color: rgb(110, 202, 255);
+                            }
+                        }
+
+                        .count {
+                            font-size:1.2rem;
+                            font-family: Arial, Helvetica, sans-serif;
+                        }
+                    }
+                    
+                }
+            }
         }
-        
     }
 
     .sidepanel-create-new {
        
         height: 3.5rem;
-        // padding:.4rem;
         padding-left:1.2rem;
         display: flex;
         align-items: center;
@@ -61,4 +102,20 @@
         }
     }
 
+}
+
+::-webkit-scrollbar {
+    width: .6rem;
+    /* background: red; */
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #C6C6C6;
+    // box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+}
+
+::-webkit-scrollbar-track {
+    border-radius: .3rem;
+    // box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 }

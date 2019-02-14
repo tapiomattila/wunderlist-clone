@@ -13,7 +13,7 @@ import { SidepanelContentComponent } from './sidepanel-content/sidepanel-content
     HeaderComponent,
     MainContentComponent,
     SidePanelSearchComponent,
-    SidepanelContentComponent
+    SidepanelContentComponent,
   ],
   imports: [
     BrowserModule
