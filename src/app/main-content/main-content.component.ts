@@ -12,4 +12,8 @@ export class MainContentComponent implements OnInit {
   ngOnInit() {
   }
 
+  test() {
+    console.log('test');
+  }
+
 }

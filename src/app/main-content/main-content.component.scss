@@ -13,7 +13,7 @@
 
         .list {
 
-            padding: 1.5rem .8rem;
+            padding: .5rem .8rem;
             ul {
                 li {
                     position: relative;
@@ -21,13 +21,57 @@
                     margin: .8rem 0;
                     border-radius: .4rem;
                     background-color: #fff;
-                    z-index:3;
+                    z-index: 3;
 
                     &:hover {
                         background-color: #E0EEFA;
                         cursor: pointer;
                     }
                 }
+            }
+        }
+
+        &__input-container {
+
+            // background: #7D9875;
+            padding: 1.5rem .7rem 0 .7rem;
+            position: relative;
+            z-index: 1000; 
+            
+
+            .input {
+                padding: 1.3rem;
+                background: #7D9875;
+                border-radius: .4rem;
+
+                input {
+                    width: 98%;
+                    border: none;
+                    font-size: 2rem;
+                    color: #B1CFC7;
+                    background: transparent;
+
+                    &:focus {
+                        outline: none;
+                        border:none;
+                        caret-color: #FAFBFA;
+                    }
+
+                    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                        color: #C7D4C7;
+                        opacity: 1;
+                        
+                      }
+                      
+                      &::-ms-input-placeholder { /* Internet Explorer 10-11 */
+                        color: #B1CFC7;
+                      }
+                      
+                      &::-ms-input-placeholder { /* Microsoft Edge */
+                        color: #B1CFC7;
+                      }
+                }
+            
             }
         }
     }
@@ -43,6 +87,9 @@
         background-color: rgba(255, 102, 0, 0.2);
         z-index: 2;
     }
+
+
+    
 
     ::-webkit-scrollbar {
         width: 18px !important;
