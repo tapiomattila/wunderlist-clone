@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Category } from 'src/app/app-models/category.model';
 
 @Component({
   selector: 'app-list-category-item',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListCategoryItemComponent implements OnInit {
 
+  @Input() categoryEl: Category;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  test(cat: Category) {
+    console.log('show cat');
+    console.log(cat);
   }
 
 }

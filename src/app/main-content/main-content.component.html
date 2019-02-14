@@ -1,23 +1,16 @@
 <div class="main-content">
   <div class="main-content__input-container">
-    <div class="input" (click)="test()">
+    <div class="input">
       <input type="text" placeholder="Add a to-do...">
     </div>
   </div>
 
   <div class="list">
     <ul>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
-      <app-todo-list-item></app-todo-list-item>
+      <app-todo-list-item 
+            *ngFor="let todo of todos" 
+            [todoEl]="todo"
+            ></app-todo-list-item>
     </ul>
   </div>
 

@@ -1,7 +1,7 @@
-  <li class="list-item">
+  <li class="list-item" (click)="test(categoryEl)">
     <div class="icon-and-name">
       <i class="fa fa-list"></i>
-      <p>Private</p>
+      <p>{{ categoryEl.categoryName }}</p>
     </div>
-    <div class="count">10</div>
+    <div class="count">{{ categoryEl.todoCount }}</div>
   </li>

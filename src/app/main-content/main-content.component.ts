@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Todo } from '../app-models/todo.model';
+import { TodoService } from '../app-services/main-content/todo.service';
 
 @Component({
   selector: 'app-main-content',
@@ -7,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainContentComponent implements OnInit {
 
-  constructor() { }
+  todos: Todo[];
+
+  constructor(private todoService: TodoService) { }
 
   ngOnInit() {
-  }
 
-  test() {
-    console.log('test');
+    console.log('show todos');
+
+    this.todos = this.todoService.getTodos();
+    console.log(this.todos);
   }
 
 }

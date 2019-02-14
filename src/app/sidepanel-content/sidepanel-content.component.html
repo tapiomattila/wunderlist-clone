@@ -26,7 +26,7 @@
     <div class="sidepanel-items">
       <ul>
 
-        <li class="list-item">
+        <li class="list-item" (click)="showAll()">
             <div class="icon-and-name">
               <i class="fa fa-address-card"></i>
               <p>Inbox</p>
@@ -34,7 +34,7 @@
             <div class="count">12</div>
         </li>
 
-        <li class="list-item">
+        <li class="list-item" (click)="showStarred()">
             <div class="icon-and-name">
               <i class="far fa-star"></i>
               <p>Starred</p>
@@ -42,7 +42,7 @@
             <div class="count">12</div>
         </li>
 
-        <li class="list-item">
+        <li class="list-item" (click)="showCompleted()">
             <div class="icon-and-name">
               <i class="fa fa-check"></i>
               <p>Completed</p>
@@ -50,29 +50,10 @@
             <div class="count">12</div>
         </li>
 
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
-        <app-list-category-item></app-list-category-item>
+        <app-list-category-item
+              *ngFor="let category of categories" 
+              [categoryEl]="category"
+              ></app-list-category-item>
 
       </ul>
     </div>
