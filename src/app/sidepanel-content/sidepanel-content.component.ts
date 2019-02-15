@@ -31,4 +31,9 @@ export class SidepanelContentComponent implements OnInit {
     console.log('showCompleted pressed');
   }
 
+  profileDrd() {
+    console.log('profile pressed');
+    document.querySelector('.profile-drd__list').classList.toggle('open');
+  }
+
 }

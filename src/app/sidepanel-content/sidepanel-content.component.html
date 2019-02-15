@@ -2,10 +2,10 @@
 
   <div class="sidepanel-header">
     <div class="profile">
-      <div class="img-dropdown">
+      <div class="img-dropdown" (click)="profileDrd()">
         <div class="img">
         </div>
-        <div class="profile-drd">
+        <div class="profile-caret">
           Profile name
           <i class="fas fa-caret-down"></i>
         </div>
@@ -19,6 +19,28 @@
           <i class="far fa-comment"></i>
         </div>
       </div>
+
+      <div class="profile-drd">
+        <ul class="profile-drd__list">
+          <p class="list-paragh">Last synced X minutes ago</p>
+          <li>Sync Now</li>
+          <li class="list-hr">
+            <hr>
+          </li>
+          <li>Account Settings</li>
+          <li>Change Background</li>
+          <li>Restore deleted lists</li>
+          <li>Install the Browser Extension</li>
+          <li>Love Wunderlist?</li>
+          <li>Tell Your Friends...</li>
+          <li>Wunderlist Website</li>
+          <li class="list-hr">
+            <hr>
+          </li>
+          <p class="list-paragh">profile email</p>
+          <li>Sign Out</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -27,33 +49,30 @@
       <ul>
 
         <li class="list-item" (click)="showAll()">
-            <div class="icon-and-name">
-              <i class="fa fa-address-card"></i>
-              <p>Inbox</p>
-            </div>
-            <div class="count">12</div>
+          <div class="icon-and-name">
+            <i class="fa fa-address-card"></i>
+            <p>Inbox</p>
+          </div>
+          <div class="count">12</div>
         </li>
 
         <li class="list-item" (click)="showStarred()">
-            <div class="icon-and-name">
-              <i class="far fa-star"></i>
-              <p>Starred</p>
-            </div>
-            <div class="count">12</div>
+          <div class="icon-and-name">
+            <i class="far fa-star"></i>
+            <p>Starred</p>
+          </div>
+          <div class="count">12</div>
         </li>
 
         <li class="list-item" (click)="showCompleted()">
-            <div class="icon-and-name">
-              <i class="fa fa-check"></i>
-              <p>Completed</p>
-            </div>
-            <div class="count">12</div>
+          <div class="icon-and-name">
+            <i class="fa fa-check"></i>
+            <p>Completed</p>
+          </div>
+          <div class="count">12</div>
         </li>
 
-        <app-list-category-item
-              *ngFor="let category of categories" 
-              [categoryEl]="category"
-              ></app-list-category-item>
+        <app-list-category-item *ngFor="let category of categories" [categoryEl]="category"></app-list-category-item>
 
       </ul>
     </div>
