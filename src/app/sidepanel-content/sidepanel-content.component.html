@@ -3,10 +3,10 @@
   <div class="sidepanel-header">
     <div class="profile">
       <div class="img-dropdown" (click)="profileDrd()">
-        <div class="img">
+        <div class="img-profile">
         </div>
         <div class="profile-caret">
-          Profile name
+          <p class="profile-name">Profile name</p>
           <i class="fas fa-caret-down"></i>
         </div>
       </div>
@@ -51,7 +51,7 @@
         <li class="list-item" (click)="showAll()">
           <div class="icon-and-name">
             <i class="fa fa-address-card"></i>
-            <p>Inbox</p>
+            <p class="category-item-name">Inbox</p>
           </div>
           <div class="count">12</div>
         </li>
@@ -59,7 +59,7 @@
         <li class="list-item" (click)="showStarred()">
           <div class="icon-and-name">
             <i class="far fa-star"></i>
-            <p>Starred</p>
+            <p class="category-item-name">Starred</p>
           </div>
           <div class="count">12</div>
         </li>
@@ -67,7 +67,7 @@
         <li class="list-item" (click)="showCompleted()">
           <div class="icon-and-name">
             <i class="fa fa-check"></i>
-            <p>Completed</p>
+            <p class="category-item-name">Completed</p>
           </div>
           <div class="count">12</div>
         </li>
@@ -78,9 +78,9 @@
     </div>
   </div>
   <div class="sidepanel-create-new">
-    <a href="#" type="button">
+    <a class="create-new-link" href="#" type="button">
       <i class="fa fa-plus"></i>
-      <p class="create-list">
+      <p class="create-new-text">
         Create list
       </p>
     </a>

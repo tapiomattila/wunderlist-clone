@@ -32,8 +32,15 @@ export class SidepanelContentComponent implements OnInit {
   }
 
   profileDrd() {
-    console.log('profile pressed');
     document.querySelector('.profile-drd__list').classList.toggle('open');
+
+    const containClose = document.querySelector('.profile-drd__list').classList.contains('close');
+    if (containClose) {
+      document.querySelector('.profile-drd').classList.remove('open-style');
+    }
+    else {
+      document.querySelector('.profile-drd').classList.add('open-style');
+    }
   }
 
 }

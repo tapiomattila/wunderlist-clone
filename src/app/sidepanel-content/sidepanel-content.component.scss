@@ -33,23 +33,40 @@
                 align-items: center;
                 padding-right:2.5rem;
 
+                &.close {
+                    padding-left:.3rem;
+                }
+
                 &:hover {
                     // background: lighten($color: #F7F7F7, $amount: 3);
                     cursor: pointer;
                 }
 
-                .img {
+                .img-profile {
                     background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Alesso_profile.png/467px-Alesso_profile.png);
                     height: 4rem;
                     width: 4rem;
                     border-radius: 50%;
                     background-position: top;
                     background-size: cover;
+
+                    &.close {
+                        height: 3rem;
+                        width: 3rem;
+                    }
                 }
 
                 .profile-caret {
                     font-size:1.4rem;
                     padding-left: .5rem;
+
+                    display: flex;
+                    align-items: center;
+
+                    .profile-name {
+                        padding: 0;
+                        padding-right:1rem;
+                    }
 
                     i {
                         color:rgb(187, 187, 187);
@@ -79,17 +96,25 @@
 
             .profile-drd {
 
-                position:relative; 
+                position:relative;
                 display: initial;
                 // z-index: 10;
+
+                top: 2.5rem;
+
+                &.open-style {
+                    position: absolute; 
+                    top: 7.5rem;
+                    left: 16rem;
+                }
 
                 &__list {
 
                     font-size: 1.3rem;
 
-                    position: absolute; 
-                    top:2.5rem; 
-                    left: -24.5rem; 
+                    position: absolute;
+                    top:2.5rem;
+                    left: -15.5rem;
                     background: #fff;
                     list-style: none;
                     width: 19rem;
@@ -98,6 +123,11 @@
                     z-index: -100;
 
                     box-shadow: 0 .1rem .3rem .2rem rgba(54, 54, 54, 0.3);
+
+                    &.close {
+                        top: 2rem;
+                        left: -5.5rem;
+                    }
 
                     &.open {
                         opacity: 1;
@@ -180,7 +210,6 @@
 
                     .count {
                         font-size:1.2rem;
-                        // font-family: Arial, Helvetica, sans-serif;
                     }
                 }
 
@@ -189,14 +218,14 @@
     }
 
     .sidepanel-create-new {
-       
+
         height: 3.5rem;
         padding-left:1.2rem;
         display: flex;
         align-items: center;
         border-top: 1px solid #DEDEDE;
 
-        a {
+        .create-new-link {
             text-decoration: none;
             color: rgb(60, 129, 233) !important;
 

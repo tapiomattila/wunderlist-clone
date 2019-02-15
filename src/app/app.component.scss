@@ -8,6 +8,10 @@
 
     grid-template-columns: 25rem 1fr;
     grid-template-rows: 5rem 1fr;
+
+    &.close {
+        grid-template-columns: 4rem 1fr;
+    }
 }
 
 app-sidepanel-search {
@@ -42,4 +46,9 @@ app-main-content {
     background-size: cover;
     background-attachment: fixed;
     min-height: calc(100vh - 5rem);
+
+    &.close {
+        left:4rem;
+        width: calc(100% - 4rem);
+    }
 }
