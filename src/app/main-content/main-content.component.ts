@@ -9,6 +9,7 @@ import { TodoService } from '../app-services/main-content/todo.service';
 })
 export class MainContentComponent implements OnInit {
 
+  todoInput = '';
   todos: Todo[];
 
   constructor(private todoService: TodoService) { }
@@ -16,9 +17,21 @@ export class MainContentComponent implements OnInit {
   ngOnInit() {
 
     console.log('show todos');
-
     this.todos = this.todoService.getTodos();
     console.log(this.todos);
+  }
+
+  onEnterPress(event) {
+    if (event.key === 'Enter') {
+      console.log('enter pressed');
+      console.log('show todoInput');
+      console.log(this.todoInput);
+      this.clearInput();
+    }
+  }
+
+  clearInput() {
+    this.todoInput = '';
   }
 
 }

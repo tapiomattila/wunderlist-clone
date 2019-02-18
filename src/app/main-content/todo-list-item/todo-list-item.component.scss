@@ -1,15 +1,107 @@
 
+@import '../../app-styles/config';
+
 li {
     position: relative;
-    padding: .4rem;
-    margin: .8rem 0;
-    border-radius: .4rem;
+    min-height: 1.4rem;
+    height: 4.8rem;
+    border-radius: .3rem;
     background-color: #fff;
     z-index: 3;
+    margin-top:.1rem;
 
     &:hover {
-        background-color: #E0EEFA;
-        cursor: pointer;
+        // background-color: #E0EEFA;
+        // cursor: pointer;
+    }
+
+    .todo-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 4.8rem;
+
+        &__checkbox {
+            padding-left:1rem;
+            cursor: pointer;
+
+            input[type="checkbox"] {
+                display: none;
+            }
+
+            .list {
+                position: relative;
+                display: inline-block;
+                overflow: hidden;
+                padding: 0 5px;
+                transition: all 0.3s;
+                transition-delay: 0.3s;
+            }
+
+            input[type="checkbox"]:checked ~ .list {
+                color: #ccc;
+                transition-delay: 0s;
+            }
+
+            span.list:after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: -100%;
+                width: 100%;
+                height: .2rem;
+                background: $primary-text-color;
+                transition: all 0.3s;
+                transition-delay: 0.1s;
+            }
+
+            input[type="checkbox"]:checked ~ span.list:after {
+                left: 0;
+                transition-delay: 0s;
+            }
+
+            .icon {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 18px;
+                height: 18px;
+                box-sizing: border-box;
+                border: 1px solid #A6A6A6;
+                border-radius:.3rem;
+                display: inline-block;
+                margin-right: 5px;
+                overflow: hidden;
+            }
+
+            .icon:before {
+                content: 'x';
+                position: absolute;
+                top: -4px;
+                left: -14px;
+                transform: translatX(-100%);
+                transition: all 0.1s;
+            }
+
+            input[type="checkbox"]:checked ~ span.icon:before {
+                transform: translateX(0);
+                left:4px;
+            }
+
+        }
+
+        &__star {
+            color: rgb(233, 233, 233);
+            padding-right: 1rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+            
+            .star-filled {
+                color: #D74E48;
+            }
+        }
     }
 }
 
