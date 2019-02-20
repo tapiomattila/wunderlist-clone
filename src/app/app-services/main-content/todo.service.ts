@@ -46,8 +46,17 @@ export class TodoService {
         console.log(this.todos);
     }
 
-    changeEditTodoState() {
-       this.editTodo = !this.editTodo;
+    hardDeleteTodo(todo: Todo) {
+        const indexTodo = this.todos.findIndex(el => el.id === todo.id);
+        this.todos.splice(indexTodo, 1);
+        this.todosChanged.next(this.getTodos());
+    }
+
+    softDeleteTodo(todo: Todo) {
+        todo.deleted = true;
+        console.log('show deleted todo');
+        console.log(todo);
+        this.updateTodo(todo.id, todo);
     }
 
     editTodoStateGet() {

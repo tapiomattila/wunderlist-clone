@@ -48,11 +48,15 @@ export class EditComponent implements OnInit {
     });
   }
 
+  closeModalOnCancel() {
+    this.closeModal();
+    this.routeBack();
+  }
+
   closeModal() {
     document.querySelector('.modal-edit').classList.toggle('open-edit-modal');
     const el = document.getElementById('app-dark-mask');
     el.classList.remove('layer');
-    this.router.navigate(['../']);
   }
 
   onSubmit() {
@@ -73,10 +77,23 @@ export class EditComponent implements OnInit {
 
     this.clearInput();
     this.closeModal();
+    this.routeBack();
+  }
+
+  deleteTodo() {
+    // this.todoService.hardDeleteTodo(this.editTodo);
+    this.todoService.softDeleteTodo(this.editTodo);
+
+    this.closeModal();
+    this.routeBack();
   }
 
   clearInput() {
     this.todoEditForm.reset();
+  }
+
+  routeBack() {
+    this.router.navigate(['../']);
   }
 
 }

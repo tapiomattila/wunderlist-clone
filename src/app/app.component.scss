@@ -55,44 +55,8 @@ app-header {
     grid-area: maincontent;
 }
 
-// .app-container {
-
-//     display: grid;
-//     grid-template-areas:
-//     'sidepanel-search header'
-//     'sidepanel-content maincontent';
-
-//     grid-template-columns: 25rem 1fr;
-//     grid-template-rows: 5rem 1fr;
-
-//     &.close {
-//         grid-template-columns: 4rem 1fr;
-//     }
-// }
-
-// app-sidepanel-search {
-//     background: #fff;
-//     grid-area: sidepanel-search;
-// }
-
-// app-sidepanel-content {
-//     grid-area: sidepanel-content;
-//     background: #F7F7F7;
-// }
-
-// app-header {
-//     grid-area: header;
-// }
-
-// .main-content {
-//     grid-area: maincontent;
-// }
-
 .layer {
-    // background: $home-image;
-    // background-attachment: fixed;
-    // background-size: cover;
-
+   
     &:after {
         content: '';
         position: absolute;

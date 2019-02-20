@@ -29,10 +29,14 @@ export class MainContentComponent implements OnInit {
   ngOnInit() {
 
     this.todos = this.todoService.getTodos();
+
+    // Show only todos that have not been deleted (soft delete)
     this.todoSubscription = this.todoService.todosChanged
       .subscribe(
         (todos: Todo[]) => {
-          this.todos = todos;
+          // this.todos = todos;
+          const todoList = todos.filter(el => el.deleted === false);
+          this.todos = todoList;
         });
     this.initForm();
   }
@@ -49,10 +53,6 @@ export class MainContentComponent implements OnInit {
   }
 
   onSubmit() {
-
-    console.log('show formvalue after submit');
-    console.log(this.todoForm.controls);
-    console.log(this.todoForm.controls.todo.status);
     const status = this.todoForm.controls.todo.status;
 
     if (status !== 'VALID') {
@@ -78,7 +78,6 @@ export class MainContentComponent implements OnInit {
 
   editTodo(todo) {
     this.selectedTodo = todo;
-    this.todoService.changeEditTodoState();
     this.router.navigate(['todos', todo.id, 'edit']);
   }
 

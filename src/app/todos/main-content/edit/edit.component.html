@@ -8,8 +8,9 @@
         <input type="text" formControlName="editTodo">
       </div>
       <div class="buttons">
-        <button class="submit-btn" type="submit">Submit</button>
-        <button class="cancel-btn" (click)="closeModal()" type="button">X</button>
+        <button class="submit-btn" type="submit">Edit</button>
+        <button class="del-btn" type="button" (click)="deleteTodo()">Remove</button>
+        <button class="cancel-btn" type="button" (click)="closeModalOnCancel()">Cancel</button>
       </div>
     </form>
   </div>
