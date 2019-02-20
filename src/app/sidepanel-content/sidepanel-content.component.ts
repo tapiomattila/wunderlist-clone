@@ -14,9 +14,7 @@ export class SidepanelContentComponent implements OnInit {
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-    console.log('show categories');
     this.categories = this.categoryService.getCategories();
-    console.log(this.categories);
   }
 
   showAll() {

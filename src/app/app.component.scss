@@ -14,6 +14,29 @@
     }
 }
 
+app-todos {
+    position:absolute;
+    top: 5rem;
+    left:25rem;
+    right:0px;
+    bottom:0px;
+    overflow-y:scroll;
+    width: calc(100% - 25rem);
+
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/e3/Seattle_Kerry_Park_Skyline.jpg);
+        
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: calc(100vh - 5rem);
+    
+    &.close {
+        left:4rem;
+        width: calc(100% - 4rem);
+    }
+}
+
 app-sidepanel-search {
     background: #fff;
     grid-area: sidepanel-search;
@@ -28,27 +51,57 @@ app-header {
     grid-area: header;
 }
 
-app-main-content {
-    position:absolute;
-    top: 5rem;
-    left:25rem;
-    right:0px;
-    bottom:0px;
-    overflow-y:scroll;
-    width: calc(100% - 25rem);
-
+.main-content {
     grid-area: maincontent;
+}
 
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/e3/Seattle_Kerry_Park_Skyline.jpg);
+// .app-container {
+
+//     display: grid;
+//     grid-template-areas:
+//     'sidepanel-search header'
+//     'sidepanel-content maincontent';
+
+//     grid-template-columns: 25rem 1fr;
+//     grid-template-rows: 5rem 1fr;
+
+//     &.close {
+//         grid-template-columns: 4rem 1fr;
+//     }
+// }
+
+// app-sidepanel-search {
+//     background: #fff;
+//     grid-area: sidepanel-search;
+// }
+
+// app-sidepanel-content {
+//     grid-area: sidepanel-content;
+//     background: #F7F7F7;
+// }
+
+// app-header {
+//     grid-area: header;
+// }
+
+// .main-content {
+//     grid-area: maincontent;
+// }
+
+.layer {
+    // background: $home-image;
+    // background-attachment: fixed;
+    // background-size: cover;
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1500;
+        background: rgba(rgb(100, 100, 100), .7);
     
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    min-height: calc(100vh - 5rem);
-
-    &.close {
-        left:4rem;
-        width: calc(100% - 4rem);
     }
 }

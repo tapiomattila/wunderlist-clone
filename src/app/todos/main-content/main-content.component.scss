@@ -50,7 +50,6 @@
                         color: #B1CFC7;
                       }
                 }
-            
             }
         }
 
@@ -71,6 +70,14 @@
         z-index: 2;
     }
 
+    .editInput {
+        height:3rem;
+        width: 100%;
+        padding: 1rem 2rem;
+        margin:1rem;
+        border: 1px solid rgb(128, 127, 127);
+    }
+
 
     ::-webkit-scrollbar {
         width: 18px !important;
@@ -88,3 +95,7 @@
         background-color: transparent;
         // box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     }
+
+ 
+
+   

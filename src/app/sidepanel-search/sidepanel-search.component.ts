@@ -87,7 +87,7 @@ export class SidePanelSearchComponent implements OnInit {
         }
 
         document.querySelector('.app-container').classList.toggle('close');
-        document.querySelector('app-main-content').classList.toggle('close');
+        document.querySelector('app-todos').classList.toggle('close');
         document.querySelector('.img-dropdown').classList.toggle('close');
         document.querySelector('.img-profile').classList.toggle('close');
         document.querySelector('.profile-drd__list').classList.toggle('close');

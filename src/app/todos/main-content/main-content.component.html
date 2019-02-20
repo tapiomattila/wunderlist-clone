@@ -1,0 +1,16 @@
+<div class="main-content">
+  <div class="main-content__input-container">
+    <form class="form-container" [formGroup]='todoForm' (ngSubmit)="onSubmit()" #form="ngForm">
+      <div class="input">
+        <input type="text" placeholder="Add a to-do..." formControlName="todo" (focus)="focusInput()">
+      </div>
+    </form>
+  </div>
+
+  <div class="list">
+    <ul>
+      <app-todo-list-item *ngFor="let todo of todos" [todoEl]="todo" (selTodo)="editTodo($event)"></app-todo-list-item>
+    </ul>
+  </div>
+</div>
+<router-outlet></router-outlet>
