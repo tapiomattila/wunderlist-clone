@@ -73,8 +73,9 @@ export class MainContentComponent implements OnInit {
         createdDate,
         editDate,
         false,
+        '',
         false,
-        '');
+        false);
 
       this.todoService.addTodo(todo);
       this.clearInput();
@@ -83,10 +84,10 @@ export class MainContentComponent implements OnInit {
 
   focusInput() {
     console.log('focus');
-    const path = this.route.routeConfig.path;
-    if (path === 'todos') {
-      this.router.navigate(['new'], { relativeTo: this.route });
-    }
+    // const path = this.route.routeConfig.path;
+    // if (path === 'todos') {
+    //   this.router.navigate(['new'], { relativeTo: this.route });
+    // }
   }
 
   editTodo(todo) {

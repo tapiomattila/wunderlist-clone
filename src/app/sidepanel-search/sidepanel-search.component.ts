@@ -130,12 +130,16 @@ export class SidePanelSearchComponent implements OnInit {
 
     focusOutSearch() {
         console.log('focus out in search');
+        const value = this.searchForm.controls.searchInput.value;
+        console.log(value);
+        if (value === '') {
+            this.utilService.setCurrentSearchUrlParams('Inbox');
+        }
         this.router.navigate([{ outlets: { ssoutlet: null } }]);
     }
 
     onSubmit() {
         const value = this.searchForm.controls.searchInput.value;
-        console.log(value);
         this.router.navigate(['', { outlets: { ssoutlet: ['search', value] } }]);
     }
 

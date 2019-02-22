@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -8,12 +8,14 @@ export class UtilityService {
 
     // Search
     private searchParams: string = '';
-    searchChanged = new Subject();
+    searchChanged = new BehaviorSubject('Inbox');
     // --------------------------------------------
 
     // List choice (category)
     private listParams: string = '';
-    listParamsChanged = new Subject();
+    listParamsChanged = new BehaviorSubject('Inbox');
+
+    changeListHeader: boolean = false;
     // --------------------------------------------
 
     private minifyCreateCategoryListObj = {
@@ -60,15 +62,16 @@ export class UtilityService {
     }
     minifyToggleCreateCategoryGet() { return this.minifyCreateCategoryListObj; }
 
-
     // Search
     setCurrentSearchUrlParams(route: string) {
+        console.log('IN SEARCH PARAMS');
         this.searchParams = route;
         this.searchChanged.next(route);
     }
 
     // List choice
     setCurrentListChoiceUrlParams(route: string) {
+        console.log('IN LIST PARAMS');
         this.listParams = route;
         this.listParamsChanged.next(route);
     }

@@ -70,8 +70,9 @@ export class EditComponent implements OnInit {
       oldTodo.createdDate,
       editDate,
       false,
-      false,
-      oldTodo.categoryId
+      oldTodo.categoryId,
+      oldTodo.starred,
+      oldTodo.completed
     );
 
     this.todoService.updateTodo(oldTodo.id, editTodo);

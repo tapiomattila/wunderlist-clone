@@ -24,7 +24,18 @@ export class TodoListItemComponent implements OnInit {
   }
 
   checked(todo: Todo) {
-    todo.done = !todo.done;
+    todo.completed = !todo.completed;
     this.todoService.updateTodo(todo.id, todo);
+  }
+
+  starred(todo: Todo) {
+    console.log('star pressed');
+    console.log(todo);
+    todo.starred = !todo.starred;
+    this.todoService.updateTodo(todo.id, todo);
+  }
+
+  getStarredColor(todo: Todo) {
+    return todo.starred === true ? 'red' : 'blue';
   }
 }

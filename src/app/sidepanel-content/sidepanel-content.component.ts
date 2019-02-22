@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/app-services/sidepanel/category.service';
 import { Category } from 'src/app/app-models/category.model';
 import { Subscription } from 'rxjs';
+import { UtilityService } from '../app-services/utility/utility.service';
+import { TodoService } from '../app-services/main-content/todo.service';
 
 @Component({
   selector: 'app-sidepanel-content',
@@ -14,8 +16,9 @@ export class SidepanelContentComponent implements OnInit, OnDestroy {
   categories: Category[];
   categorySubs: Subscription;
 
-  constructor(private categoryService: CategoryService,
-    private router: Router) { }
+  constructor(public categoryService: CategoryService,
+              private router: Router,
+              private utilService: UtilityService) { }
 
   ngOnInit() {
     this.categories = this.categoryService.getCategories();
@@ -29,16 +32,19 @@ export class SidepanelContentComponent implements OnInit, OnDestroy {
 
   showAll() {
     console.log('showAll pressed');
+    this.utilService.setCurrentListChoiceUrlParams('inbox');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'inbox'] } }]);
   }
 
   showStarred() {
     console.log('showStarred pressed');
+    this.utilService.setCurrentListChoiceUrlParams('starred');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'starred'] } }]);
   }
 
   showCompleted() {
     console.log('showCompleted pressed');
+    this.utilService.setCurrentListChoiceUrlParams('completed');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'completed'] } }]);
   }
 
