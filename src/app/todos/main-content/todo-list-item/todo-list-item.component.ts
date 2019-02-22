@@ -36,6 +36,6 @@ export class TodoListItemComponent implements OnInit {
   }
 
   getStarredColor(todo: Todo) {
-    return todo.starred === true ? 'red' : 'blue';
+    return todo.starred;
   }
 }

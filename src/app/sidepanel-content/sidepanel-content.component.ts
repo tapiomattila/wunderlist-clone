@@ -18,7 +18,8 @@ export class SidepanelContentComponent implements OnInit, OnDestroy {
 
   constructor(public categoryService: CategoryService,
               private router: Router,
-              private utilService: UtilityService) { }
+              private utilService: UtilityService,
+              private todoService: TodoService) { }
 
   ngOnInit() {
     this.categories = this.categoryService.getCategories();
@@ -33,18 +34,21 @@ export class SidepanelContentComponent implements OnInit, OnDestroy {
   showAll() {
     console.log('showAll pressed');
     this.utilService.setCurrentListChoiceUrlParams('inbox');
+    this.todoService.showTodosSubject.next('all');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'inbox'] } }]);
   }
 
   showStarred() {
     console.log('showStarred pressed');
     this.utilService.setCurrentListChoiceUrlParams('starred');
+    this.todoService.showTodosSubject.next('starred');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'starred'] } }]);
   }
 
   showCompleted() {
     console.log('showCompleted pressed');
     this.utilService.setCurrentListChoiceUrlParams('completed');
+    this.todoService.showTodosSubject.next('completed');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'completed'] } }]);
   }
 

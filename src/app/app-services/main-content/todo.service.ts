@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Todo } from 'src/app/app-models/todo.model';
 import { UtilityService } from '../utility/utility.service';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +10,7 @@ export class TodoService {
 
     private editTodo: boolean = false;
     todosChanged = new Subject<Todo[]>();
-
+    showTodosSubject = new BehaviorSubject('all');
     private todos: Todo[] = [
         new Todo(
             this.utilService.createUUID(),

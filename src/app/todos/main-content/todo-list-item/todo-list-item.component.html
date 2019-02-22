@@ -7,7 +7,7 @@
     </label>
     <div class="todo-item__icons">
         <i class="fa fa-pen pen" (click)="doubleClickPressed(todoEl)"></i>
-        <i class="fa fa-star" (click)="starred(todoEl)" [ngStyle]="{ backgroundColor: getStarredColor(todoEl) }"></i>
+        <i class="fa fa-star" (click)="starred(todoEl)" [ngClass]="{ 'star-filled': getStarredColor(todoEl) === true }"></i>
     </div>
   </div>
 </li>
