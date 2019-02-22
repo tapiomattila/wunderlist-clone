@@ -6,9 +6,11 @@
             <div class="menu-btn__btn-line"></div>
         </div>
 
-        <div class="sidepanel-input">
-            <input type="text" placeholder="">
-        </div>
+        <form [formGroup]='searchForm' (ngSubmit)="onSubmit()">
+            <div class="sidepanel-input">
+                <input type="text" placeholder="" (focus)="focusSearch()" (focusout)=focusOutSearch() formControlName="searchInput">
+            </div>
+        </form>
 
         <div class="magnifying-glass">
             <i class="fa fa-search search-magni"></i>
@@ -16,3 +18,5 @@
         </div>
     </div>
 </div>
+<router-outlet name="ssoutlet"></router-outlet>
+

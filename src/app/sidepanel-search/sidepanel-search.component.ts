@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilityService } from '../app-services/utility/utility.service';
+import { UtilityService } from 'src/app/app-services/utility/utility.service';
+import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-sidepanel-search',
@@ -9,9 +11,15 @@ import { UtilityService } from '../app-services/utility/utility.service';
 
 export class SidePanelSearchComponent implements OnInit {
 
-    constructor(private utilService: UtilityService) { }
+    searchForm: FormGroup;
 
-    ngOnInit() { }
+    constructor(private utilService: UtilityService,
+        private router: Router) { }
+
+    ngOnInit() {
+
+        this.initForm();
+    }
 
     minifySidePanel() {
 
@@ -91,6 +99,8 @@ export class SidePanelSearchComponent implements OnInit {
         document.querySelector('.img-dropdown').classList.toggle('close');
         document.querySelector('.img-profile').classList.toggle('close');
         document.querySelector('.profile-drd__list').classList.toggle('close');
+        document.querySelector('.sidepanel-input').classList.toggle('close');
+        document.querySelector('.magnifying-glass').classList.toggle('close');
 
         // -------------------------------------------
         // toggle create new text
@@ -104,5 +114,32 @@ export class SidePanelSearchComponent implements OnInit {
             const child = createCategoryTextValues.child;
             parent.appendChild(child);
         }
+    }
+
+    initForm() {
+        this.searchForm = new FormGroup({
+            searchInput: new FormControl('', Validators.required)
+        });
+    }
+
+    focusSearch() {
+        console.log('focus search');
+        console.log(this.router.url);
+        this.router.navigate(['', { outlets: { ssoutlet: ['search'] } }]);
+    }
+
+    focusOutSearch() {
+        console.log('focus out in search');
+        this.router.navigate([{ outlets: { ssoutlet: null } }]);
+    }
+
+    onSubmit() {
+        const value = this.searchForm.controls.searchInput.value;
+        console.log(value);
+        this.router.navigate(['', { outlets: { ssoutlet: ['search', value] } }]);
+    }
+
+    clearInput() {
+        this.searchForm.reset();
     }
 }

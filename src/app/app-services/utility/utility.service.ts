@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UtilityService {
+
+    // Search
+    private searchParams: string = '';
+    searchChanged = new Subject();
+    // --------------------------------------------
+
+    // List choice (category)
+    private listParams: string = '';
+    listParamsChanged = new Subject();
+    // --------------------------------------------
 
     private minifyCreateCategoryListObj = {
         child: undefined,
@@ -48,5 +59,18 @@ export class UtilityService {
         this.minifyCreateCategoryListObj.parent = valueParent;
     }
     minifyToggleCreateCategoryGet() { return this.minifyCreateCategoryListObj; }
+
+
+    // Search
+    setCurrentSearchUrlParams(route: string) {
+        this.searchParams = route;
+        this.searchChanged.next(route);
+    }
+
+    // List choice
+    setCurrentListChoiceUrlParams(route: string) {
+        this.listParams = route;
+        this.listParamsChanged.next(route);
+    }
 
 }

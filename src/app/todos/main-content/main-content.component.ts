@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Todo } from 'src/app/app-models/todo.model';
@@ -17,6 +17,8 @@ export class MainContentComponent implements OnInit {
   todoSubscription: Subscription;
   todoForm: FormGroup;
 
+  @ViewChild('todoInput') todoInput: ElementRef;
+
   id: string;
   editMode: boolean = false;
   selectedTodo: Todo;
@@ -28,21 +30,23 @@ export class MainContentComponent implements OnInit {
 
   ngOnInit() {
 
-    this.todos = this.todoService.getTodos();
+    // this.todos = this.todoService.getTodos();
+    const todos = this.todoService.getTodos();
+    console.log('show unfilterd todos');
+    console.log(todos);
+    this.todos = todos.filter(el => el.deleted === false);
 
     // Show only todos that have not been deleted (soft delete)
     this.todoSubscription = this.todoService.todosChanged
       .subscribe(
-        (todos: Todo[]) => {
-          // this.todos = todos;
-          const todoList = todos.filter(el => el.deleted === false);
+        (todosEl: Todo[]) => {
+          const todoList = todosEl.filter(el => el.deleted === false);
           this.todos = todoList;
         });
     this.initForm();
   }
 
   initForm() {
-
     this.todoForm = new FormGroup({
       todo: new FormControl('', Validators.required)
     });
@@ -63,13 +67,22 @@ export class MainContentComponent implements OnInit {
       const uniqId = this.utilService.createUUID();
       const createdDate = new Date();
       const editDate = new Date();
-      const todo = new Todo(uniqId, formValue, createdDate, editDate, false, false);
+      const todo = new Todo(
+        uniqId,
+        formValue,
+        createdDate,
+        editDate,
+        false,
+        false,
+        '');
+
       this.todoService.addTodo(todo);
       this.clearInput();
     }
   }
 
   focusInput() {
+    console.log('focus');
     const path = this.route.routeConfig.path;
     if (path === 'todos') {
       this.router.navigate(['new'], { relativeTo: this.route });
@@ -79,6 +92,11 @@ export class MainContentComponent implements OnInit {
   editTodo(todo) {
     this.selectedTodo = todo;
     this.router.navigate(['todos', todo.id, 'edit']);
+  }
+
+  focusOutTodoInput() {
+    console.log('focus out in todo input');
+    this.router.navigate(['../']);
   }
 
 }

@@ -4,13 +4,16 @@
       <div class="header">
         <h3>Edit todo</h3>
       </div>
-      <div class="input-container">
-        <input type="text" formControlName="editTodo">
-      </div>
-      <div class="buttons">
-        <button class="submit-btn" type="submit">Edit</button>
-        <button class="del-btn" type="button" (click)="deleteTodo()">Remove</button>
-        <button class="cancel-btn" type="button" (click)="closeModalOnCancel()">Cancel</button>
+      <div class="category-container">
+        <div class="input-name">
+          <input type="text" formControlName="editTodo">
+        </div>
+        <div class="buttons">
+          
+          <button class="cancel-btn" type="button" (click)="closeModalOnCancel()">Cancel</button>
+          <button class="del-btn" type="button" (click)="deleteTodo()">Remove</button>
+          <button class="submit-btn" type="submit">Edit</button>
+        </div>
       </div>
     </form>
   </div>

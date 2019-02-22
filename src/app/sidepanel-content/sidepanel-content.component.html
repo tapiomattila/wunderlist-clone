@@ -73,13 +73,13 @@
           <div class="count">12</div>
         </li>
 
-        <app-list-category-item *ngFor="let category of categories" [categoryEl]="category"></app-list-category-item>
+        <app-list-category-item *ngFor="let category of categories" [categoryEl]="category" (click)="categorySelectedFunc(category)"></app-list-category-item>
 
       </ul>
     </div>
   </div>
   <div class="sidepanel-create-new">
-    <a class="create-new-link" href="#" type="button">
+    <a class="create-new-link" type="button" (click)="createCategory()">
       <i class="fa fa-plus"></i>
       <p class="create-new-text">
         Create list
@@ -87,3 +87,4 @@
     </a>
   </div>
 </div>
+<router-outlet name="listsoutlet"></router-outlet>

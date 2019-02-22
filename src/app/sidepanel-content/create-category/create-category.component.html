@@ -1,0 +1,23 @@
+<div class="modal-category">
+  <div>
+    <form [formGroup]='newCategoryForm' (ngSubmit)="onSubmit()" class="categoryForm">
+
+
+      <div class="header">
+        <h4>Create New List</h4>
+      </div>
+
+      <div class="category-container">
+        <div class="input-name">
+          <input type="text" formControlName="categoryName" placeholder="List Name">
+          <hr>
+        </div>
+
+        <div class="buttons">
+          <button class="cancel-btn" type="button" (click)="closeModalOnCancel()">Cancel</button>
+          <button class="save-btn" type="submit">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

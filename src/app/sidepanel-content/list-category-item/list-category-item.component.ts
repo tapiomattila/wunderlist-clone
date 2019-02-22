@@ -15,9 +15,9 @@ export class ListCategoryItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  test(cat: Category) {
-    console.log('show cat');
-    console.log(cat);
+  selectCategory(category: Category) {
+    console.log('show category');
+    console.log(category);
   }
 
 }

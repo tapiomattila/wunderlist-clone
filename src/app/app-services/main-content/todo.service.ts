@@ -12,16 +12,22 @@ export class TodoService {
     todosChanged = new Subject<Todo[]>();
 
     private todos: Todo[] = [
-        new Todo(this.utilService.createUUID(), 
-        'First todo', new Date(2019, 2, 14, 4, 14, 0), new Date(2019, 2, 14, 4, 14, 0), false, false),
-        new Todo(this.utilService.createUUID(), 'Sec todo', new Date(2019, 2, 13, 4, 14, 0), new Date(2019, 2, 13, 4, 14, 0), false, false),
-        new Todo(this.utilService.createUUID(), 'Thi todo', new Date(2019, 1, 15, 4, 14, 0), new Date(2019, 1, 15, 4, 14, 0), false, false),
-        new Todo(this.utilService.createUUID(), 
-        'Fourth todo', new Date(2019, 1, 24, 4, 14, 0), new Date(2019, 1, 24, 4, 14, 0), false, false),
-        new Todo(this.utilService.createUUID(), 'Fi todo', new Date(2019, 2, 2, 11, 14, 0), new Date(2019, 2, 2, 11, 14, 0), false, false),
-        new Todo(this.utilService.createUUID(), 'Si todo', new Date(2019, 4, 1, 14, 24, 0), new Date(2019, 4, 1, 14, 24, 0), false, false),
-        new Todo(this.utilService.createUUID(), 'Sev todo', new Date(2019, 2, 14, 4, 53, 5), new Date(2019, 2, 14, 4, 53, 5), false, false),
-        new Todo(this.utilService.createUUID(), 'Eight todo', new Date(2019, 2, 2, 2, 2, 0), new Date(2019, 2, 2, 2, 2, 0), false, false)
+        new Todo(this.utilService.createUUID(),
+        'First todo', new Date(2019, 2, 14, 4, 14, 0), new Date(2019, 2, 14, 4, 14, 0), false, false, ''),
+        // new Todo(this.utilService.createUUID(), 'Sec todo',
+        // new Date(2019, 2, 13, 4, 14, 0), new Date(2019, 2, 13, 4, 14, 0), false, false),
+        // new Todo(this.utilService.createUUID(), 'Thi todo',
+        // new Date(2019, 1, 15, 4, 14, 0), new Date(2019, 1, 15, 4, 14, 0), false, false),
+        // new Todo(this.utilService.createUUID(), 
+        // 'Fourth todo', new Date(2019, 1, 24, 4, 14, 0), new Date(2019, 1, 24, 4, 14, 0), false, false),
+        // new Todo(this.utilService.createUUID(), 'Fi todo',
+        // new Date(2019, 2, 2, 11, 14, 0), new Date(2019, 2, 2, 11, 14, 0), false, false),
+        // new Todo(this.utilService.createUUID(), 'Si todo',
+        // new Date(2019, 4, 1, 14, 24, 0), new Date(2019, 4, 1, 14, 24, 0), false, false),
+        // new Todo(this.utilService.createUUID(), 'Sev todo',
+        // new Date(2019, 2, 14, 4, 53, 5), new Date(2019, 2, 14, 4, 53, 5), false, false),
+        // new Todo(this.utilService.createUUID(), 'Eight todo',
+        // new Date(2019, 2, 2, 2, 2, 0), new Date(2019, 2, 2, 2, 2, 0), false, false)
     ];
 
     constructor(private utilService: UtilityService) { }
