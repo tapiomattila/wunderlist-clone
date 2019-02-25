@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, AfterViewInit } from '@angular/core';
 import { Todo } from 'src/app/app-models/todo.model';
 import { Subject } from 'rxjs';
 import { TodoService } from 'src/app/app-services/main-content/todo.service';
@@ -38,4 +38,5 @@ export class TodoListItemComponent implements OnInit {
   getStarredColor(todo: Todo) {
     return todo.starred;
   }
+
 }

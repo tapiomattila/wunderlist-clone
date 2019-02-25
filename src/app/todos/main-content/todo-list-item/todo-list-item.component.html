@@ -1,7 +1,7 @@
 <li (dblclick)="doubleClickPressed(todoEl)" >
   <div class="todo-item">
     <label class="todo-item__checkbox">
-        <input type="checkbox" (click)="checked(todoEl)">
+        <input type="checkbox" (click)="checked(todoEl)" [checked]="todoEl.completed">
         <span class="icon"></span>
         <span class="list">{{ todoEl.name }}</span>
     </label>

@@ -31,24 +31,18 @@ export class MainContentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    // this.todos = this.todoService.getTodos();
-
     const todos = this.todoService.getTodos();
     this.todos = todos.filter(el => el.deleted === false);
 
     // Show only todos that have not been deleted (soft delete)
     this.todoSubscription = this.todoService.todosChanged
       .subscribe(
-        (todosEl: Todo[]) => {
-          // const todoList = todosEl.filter(el => el.deleted === false);
-          // this.todos = todoList;
-          // console.log('show todos in all');
-          // console.log(this.todos);
+        () => {
 
           return this.todoService.showTodosSubject
             .subscribe(
               (res: string) => {
-                console.log('SHOW TODOS SHOW');
+                console.log('SHOW TODOS');
                 console.log(res);
 
                 if (res === 'all') { this.todos = this.showAllTodos(); }
@@ -60,6 +54,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
                   console.log('error handling');
                 }
               });
+
         });
 
     this.initForm();
