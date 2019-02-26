@@ -4,6 +4,8 @@ import { Todo } from 'src/app/app-models/todo.model';
 import { TodoService } from 'src/app/app-services/main-content/todo.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UtilityService } from 'src/app/app-services/utility/utility.service';
+import { CategoryService } from 'src/app/app-services/sidepanel/category.service';
 
 @Component({
   selector: 'app-edit',
@@ -18,8 +20,10 @@ export class EditComponent implements OnInit {
   todoEditForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private todoService: TodoService) { }
+              private router: Router,
+              private todoService: TodoService,
+              private utilService: UtilityService,
+              private categoryService: CategoryService) { }
 
   ngOnInit() {
     document.querySelector('.modal-edit').classList.toggle('open-edit-modal');
@@ -83,7 +87,6 @@ export class EditComponent implements OnInit {
   }
 
   deleteTodo() {
-    // this.todoService.hardDeleteTodo(this.editTodo);
     this.todoService.softDeleteTodo(this.editTodo);
 
     this.closeModal();

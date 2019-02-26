@@ -8,7 +8,6 @@ import { Subject, BehaviorSubject } from 'rxjs';
 })
 export class TodoService {
 
-    private editTodo: boolean = false;
     todosChanged = new Subject<Todo[]>();
     showTodosSubject = new BehaviorSubject('all');
     private todos: Todo[] = [
@@ -51,9 +50,5 @@ export class TodoService {
         console.log('show deleted todo');
         console.log(todo);
         this.updateTodo(todo.id, todo);
-    }
-
-    editTodoStateGet() {
-        return this.editTodo;
     }
 }

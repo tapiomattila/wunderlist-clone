@@ -34,21 +34,27 @@ export class SidepanelContentComponent implements OnInit, OnDestroy {
   showAll() {
     console.log('showAll pressed');
     this.utilService.setCurrentListChoiceUrlParams('inbox');
+    this.utilService.listCategorySelected = false;
     this.todoService.showTodosSubject.next('all');
+    this.todoService.todosChanged.next(this.todoService.getTodos());
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'inbox'] } }]);
   }
 
   showStarred() {
     console.log('showStarred pressed');
     this.utilService.setCurrentListChoiceUrlParams('starred');
+    this.utilService.listCategorySelected = false;
     this.todoService.showTodosSubject.next('starred');
+    this.todoService.todosChanged.next(this.todoService.getTodos());
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'starred'] } }]);
   }
 
   showCompleted() {
     console.log('showCompleted pressed');
     this.utilService.setCurrentListChoiceUrlParams('completed');
+    this.utilService.listCategorySelected = false;
     this.todoService.showTodosSubject.next('completed');
+    this.todoService.todosChanged.next(this.todoService.getTodos());
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'completed'] } }]);
   }
 
@@ -71,6 +77,9 @@ export class SidepanelContentComponent implements OnInit, OnDestroy {
 
   categorySelectedFunc(category: Category) {
     console.log('category selected');
+    this.utilService.listCategorySelected = true;
+    this.todoService.showTodosSubject.next(category.id);
+    this.todoService.todosChanged.next(this.todoService.getTodos());
     this.router.navigate(['', { outlets: { listsoutlet: ['list', category.id] } }]);
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -7,14 +7,12 @@ import { Subject, BehaviorSubject } from 'rxjs';
 export class UtilityService {
 
     // Search
-    private searchParams: string = '';
     searchChanged = new BehaviorSubject('Inbox');
     // --------------------------------------------
 
     // List choice (category)
-    private listParams: string = '';
     listParamsChanged = new BehaviorSubject('Inbox');
-
+    listCategorySelected: boolean = false;
     changeListHeader: boolean = false;
     // --------------------------------------------
 
@@ -64,15 +62,11 @@ export class UtilityService {
 
     // Search
     setCurrentSearchUrlParams(route: string) {
-        console.log('IN SEARCH PARAMS');
-        this.searchParams = route;
         this.searchChanged.next(route);
     }
 
     // List choice
     setCurrentListChoiceUrlParams(route: string) {
-        console.log('IN LIST PARAMS');
-        this.listParams = route;
         this.listParamsChanged.next(route);
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/app-models/category.model';
@@ -13,6 +13,7 @@ import { CategoryService } from 'src/app/app-services/sidepanel/category.service
 export class CreateCategoryComponent implements OnInit {
 
   newCategoryForm: FormGroup;
+  @ViewChild('newCategoryInput') categoryInput: ElementRef;
 
   constructor(private router: Router,
     private utilityService: UtilityService,
@@ -34,6 +35,8 @@ export class CreateCategoryComponent implements OnInit {
     this.newCategoryForm = new FormGroup({
       categoryName: new FormControl('', Validators.required)
     });
+
+    this.categoryInput.nativeElement.focus();
   }
 
   closeModalOnCancel() {

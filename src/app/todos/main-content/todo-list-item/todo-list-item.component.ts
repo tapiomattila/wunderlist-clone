@@ -3,7 +3,6 @@ import { Todo } from 'src/app/app-models/todo.model';
 import { Subject } from 'rxjs';
 import { TodoService } from 'src/app/app-services/main-content/todo.service';
 
-
 @Component({
   selector: 'app-todo-list-item',
   templateUrl: './todo-list-item.component.html',

@@ -6,13 +6,13 @@
       </div>
       <div class="category-container">
         <div class="input-name">
-          <input type="text" formControlName="editTodo">
+          <input type="text" formControlName="editTodo" [readonly]="this.editTodo.completed">
         </div>
         <div class="buttons">
           
           <button class="cancel-btn" type="button" (click)="closeModalOnCancel()">Cancel</button>
           <button class="del-btn" type="button" (click)="deleteTodo()">Remove</button>
-          <button class="submit-btn" type="submit">Edit</button>
+          <button class="submit-btn" type="submit" [disabled]="this.editTodo.completed">Edit</button>
         </div>
       </div>
     </form>

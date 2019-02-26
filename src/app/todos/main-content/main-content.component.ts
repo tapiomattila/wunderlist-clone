@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Todo } from 'src/app/app-models/todo.model';
@@ -19,15 +19,13 @@ export class MainContentComponent implements OnInit, OnDestroy {
   todoCompletedSubscription: Subscription;
   todoForm: FormGroup;
 
-  @ViewChild('todoInput') todoInput: ElementRef;
-
   id: string;
   editMode: boolean = false;
   selectedTodo: Todo;
 
   constructor(private todoService: TodoService,
-    private utilService: UtilityService,
-    private router: Router) { }
+              private utilService: UtilityService,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -42,12 +40,10 @@ export class MainContentComponent implements OnInit, OnDestroy {
           return this.todoService.showTodosSubject
             .subscribe(
               (res: string) => {
-                console.log('SHOW TODOS');
-                console.log(res);
-
                 if (res === 'all') { this.todos = this.showAllTodos(); }
                 else if (res === 'starred') { this.todos = this.showStarredTodos(); }
                 else if (res === 'completed') { this.todos = this.showCompletedTodos(); }
+                else if (this.utilService.listCategorySelected) { this.todos = this.showSelectedCategoryFilterTodos(res); }
                 else {
                   this.todos = [];
                   console.error('SOMETHING WENT WRONG IN TODOS LIST');
@@ -77,22 +73,48 @@ export class MainContentComponent implements OnInit, OnDestroy {
       console.log('status is invalid');
     }
     else {
-      const formValue = this.todoForm.controls.todo.value;
-      const uniqId = this.utilService.createUUID();
-      const createdDate = new Date();
-      const editDate = new Date();
-      const todo = new Todo(
-        uniqId,
-        formValue,
-        createdDate,
-        editDate,
-        false,
-        '',
-        false,
-        false);
 
-      this.todoService.addTodo(todo);
-      this.clearInput();
+      if (this.utilService.listCategorySelected) {
+        this.todoService.showTodosSubject.subscribe(
+          (res: string) => {
+            const formValue = this.todoForm.controls.todo.value;
+            if (formValue === null || formValue === '') { return; }
+            const uniqId = this.utilService.createUUID();
+            const createdDate = new Date();
+            const editDate = new Date();
+            const todo = new Todo(
+              uniqId,
+              formValue,
+              createdDate,
+              editDate,
+              false,
+              res,
+              false,
+              false
+            );
+
+            this.todoService.addTodo(todo);
+            this.clearInput();
+          }
+        );
+      }
+      else {
+        const formValue = this.todoForm.controls.todo.value;
+        const uniqId = this.utilService.createUUID();
+        const createdDate = new Date();
+        const editDate = new Date();
+        const todo = new Todo(
+          uniqId,
+          formValue,
+          createdDate,
+          editDate,
+          false,
+          '',
+          false,
+          false);
+        this.todoService.addTodo(todo);
+        this.clearInput();
+      }
     }
   }
 
@@ -132,6 +154,13 @@ export class MainContentComponent implements OnInit, OnDestroy {
     const todosFiltered = todos.filter(el => el.deleted === false);
     const completed = todosFiltered.filter(el => el.completed === true);
     return completed;
+  }
+
+  showSelectedCategoryFilterTodos(categoryId: string) {
+    const todos = this.todoService.getTodos();
+    const todosFiltered = todos.filter(el => el.deleted === false);
+    const todosCategorySelected = todosFiltered.filter(el => el.categoryId === categoryId);
+    return todosCategorySelected;
   }
 
   ngOnDestroy() {

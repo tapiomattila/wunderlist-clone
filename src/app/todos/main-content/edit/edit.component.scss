@@ -124,6 +124,11 @@
                         cursor: pointer;
                         background: rgb(68, 139, 201);
                     }
+
+                    &:disabled {
+                        background: rgb(124, 168, 206);
+                        cursor: not-allowed;
+                    }
                 }   
             }
 
