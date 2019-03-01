@@ -5,6 +5,7 @@ import { Todo } from 'src/app/app-models/todo.model';
 import { TodoService } from 'src/app/app-services/main-content/todo.service';
 import { UtilityService } from 'src/app/app-services/utility/utility.service';
 import { Router } from '@angular/router';
+import { TodoListShowService } from 'src/app/app-services/main-content/todo-list-show.service';
 
 @Component({
   selector: 'app-main-content',
@@ -15,8 +16,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
 
   todos: Todo[];
   todoSubscription: Subscription;
-  todoStarredSubscription: Subscription;
-  todoCompletedSubscription: Subscription;
+  searchSubscription: Subscription;
   todoForm: FormGroup;
 
   id: string;
@@ -24,35 +24,16 @@ export class MainContentComponent implements OnInit, OnDestroy {
   selectedTodo: Todo;
 
   constructor(private todoService: TodoService,
-              private utilService: UtilityService,
-              private router: Router) { }
+    private utilService: UtilityService,
+    private router: Router,
+    private todoListShowService: TodoListShowService) { }
 
   ngOnInit() {
 
     const todos = this.todoService.getTodos();
     this.todos = todos.filter(el => el.deleted === false);
-
-    // Show only todos that have not been deleted (soft delete)
-    this.todoSubscription = this.todoService.todosChanged
-      .subscribe(
-        () => {
-
-          return this.todoService.showTodosSubject
-            .subscribe(
-              (res: string) => {
-                if (res === 'all') { this.todos = this.showAllTodos(); }
-                else if (res === 'starred') { this.todos = this.showStarredTodos(); }
-                else if (res === 'completed') { this.todos = this.showCompletedTodos(); }
-                else if (this.utilService.listCategorySelected) { this.todos = this.showSelectedCategoryFilterTodos(res); }
-                else {
-                  this.todos = [];
-                  console.error('SOMETHING WENT WRONG IN TODOS LIST');
-                  console.log('error handling');
-                }
-              });
-
-        });
-
+    this.showCategorySelectedTodos();
+    this.showTodosBySearchResult();
     this.initForm();
   }
 
@@ -74,6 +55,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
     }
     else {
 
+      // created category selected, give this category for the given todo
       if (this.utilService.listCategorySelected) {
         this.todoService.showTodosSubject.subscribe(
           (res: string) => {
@@ -136,36 +118,87 @@ export class MainContentComponent implements OnInit, OnDestroy {
     this.router.navigate(['../']);
   }
 
-  showAllTodos() {
-    const todos = this.todoService.getTodos();
-    const todosAll = todos.filter(el => el.deleted === false);
-    return todosAll;
+  showCategorySelectedTodos() {
+    // Show only todos that have not been deleted (soft delete)
+    this.todoSubscription = this.todoService.todosChanged
+      .subscribe(
+        () => {
+
+          return this.todoService.showTodosSubject
+            .subscribe(
+              (res: string) => {
+                if (res === 'all') { this.todos = this.todoListShowService.showAllTodos(); }
+                else if (res === 'starred') { this.todos = this.todoListShowService.showStarredTodos(); }
+                else if (res === 'completed') { this.todos = this.todoListShowService.showCompletedTodos(); }
+                else if (this.utilService.listCategorySelected) {
+                  this.todos = this.todoListShowService.showSelectedCategoryFilterTodos(res);
+                }
+                else {
+                  this.todos = [];
+                  console.error('SOMETHING WENT WRONG IN TODOS LIST, empty list');
+                }
+              },
+              (err: Error) => {
+                console.log('show error in main content showTodosSubject');
+                console.log(err);
+                console.log(err.message);
+              });
+        },
+        (err: Error) => {
+          console.log('show error in main content todosChanged');
+          console.log(err);
+          console.log(err.message);
+        });
   }
 
-  showStarredTodos() {
-    const todos = this.todoService.getTodos();
-    const todosFiltered = todos.filter(el => el.deleted === false);
-    const starred = todosFiltered.filter(el => el.starred === true);
-    return starred;
-  }
+  showTodosBySearchResult() {
+    this.searchSubscription = this.utilService.searchChanged
+      .subscribe(
+        (res: string) => {
 
-  showCompletedTodos() {
-    const todos = this.todoService.getTodos();
-    const todosFiltered = todos.filter(el => el.deleted === false);
-    const completed = todosFiltered.filter(el => el.completed === true);
-    return completed;
-  }
+          let searchResult = '';
+          const searchInputLower = res.toLowerCase();
 
-  showSelectedCategoryFilterTodos(categoryId: string) {
-    const todos = this.todoService.getTodos();
-    const todosFiltered = todos.filter(el => el.deleted === false);
-    const todosCategorySelected = todosFiltered.filter(el => el.categoryId === categoryId);
-    return todosCategorySelected;
+          if (searchInputLower !== 'inbox' &&
+            searchInputLower !== 'starred' &&
+            searchInputLower !== 'completed') {
+            searchResult = searchInputLower;
+          }
+          switch (res) {
+            case 'inbox':
+              this.todos = this.todoListShowService.showAllTodos();
+              break;
+            case 'starred':
+              this.todos = this.todoListShowService.showStarredTodos();
+              break;
+            case 'completed':
+              this.todos = this.todoListShowService.showCompletedTodos();
+              break;
+            case '':
+              this.todos = this.todoListShowService.showAllTodos();
+              break;
+            case searchResult:
+              this.todos = this.todoListShowService.showSearchResultCategories(res);
+              break;
+            default:
+              this.todos = this.todoListShowService.showAllTodos();
+              break;
+          }
+        },
+        (err: Error) => {
+          console.log('SHOW ERROR search');
+          console.log(err);
+          console.log(err.message);
+        });
   }
 
   ngOnDestroy() {
     if (this.todoSubscription !== undefined) {
       this.todoSubscription.unsubscribe();
+    }
+
+    if (this.searchSubscription !== undefined) {
+      this.searchSubscription.unsubscribe();
     }
   }
 

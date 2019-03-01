@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UtilityService } from 'src/app/app-services/utility/utility.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TodoService } from '../app-services/main-content/todo.service';
+import { CategoryService } from '../app-services/sidepanel/category.service';
 
 @Component({
     selector: 'app-sidepanel-search',
@@ -13,8 +15,12 @@ export class SidePanelSearchComponent implements OnInit {
 
     searchForm: FormGroup;
 
+    filteredStatus: string = '';
+
     constructor(private utilService: UtilityService,
-        private router: Router) { }
+        private router: Router,
+        private todoService: TodoService,
+        private categoryService: CategoryService) { }
 
     ngOnInit() {
 
@@ -140,6 +146,17 @@ export class SidePanelSearchComponent implements OnInit {
 
     onSubmit() {
         const value = this.searchForm.controls.searchInput.value;
+        const category = this.categoryService.getCategories()
+                            .find(el => el.categoryName === value);
+        if (category) {
+            this.utilService.listCategorySelected = true;
+            this.todoService.showTodosSubject.next(category.id);
+        }
+        else {
+            this.utilService.listCategorySelected = false;
+            this.todoService.showTodosSubject.next('all');
+        }
+
         this.router.navigate(['', { outlets: { ssoutlet: ['search', value] } }]);
     }
 

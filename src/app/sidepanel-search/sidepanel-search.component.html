@@ -8,7 +8,7 @@
 
         <form [formGroup]='searchForm' (ngSubmit)="onSubmit()">
             <div class="sidepanel-input">
-                <input type="text" placeholder="" (focus)="focusSearch()" (focusout)=focusOutSearch() formControlName="searchInput">
+                <input type="text" placeholder="" (focus)="focusSearch()" (focusout)=focusOutSearch() formControlName="searchInput" >
             </div>
         </form>
 
@@ -19,4 +19,3 @@
     </div>
 </div>
 <router-outlet name="ssoutlet"></router-outlet>
-
