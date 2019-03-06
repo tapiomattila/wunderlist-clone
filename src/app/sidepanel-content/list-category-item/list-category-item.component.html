@@ -3,5 +3,5 @@
       <i class="fa fa-list"></i>
       <p class="category-item-name">{{ categoryEl.categoryName }}</p>
     </div>
-    <div class="count">{{ categoryService.getCategorySelectedTodoCount(categoryEl.id) }}</div>
+    <div class="count">{{ (store.showCustomCategoryContent(categoryEl.id) | async).length }}</div>
   </li>

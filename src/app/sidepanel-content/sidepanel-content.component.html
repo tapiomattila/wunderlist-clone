@@ -54,7 +54,7 @@
             <i class="fa fa-address-card"></i>
             <p class="category-item-name">Inbox</p>
           </div>
-          <div class="count">{{ categoryService.getInboxCount() }}</div>
+          <div class="count">{{ (store.showInbox() | async).length }}</div>
         </li>
 
         <li class="list-item" (click)="showStarred()">
@@ -62,7 +62,7 @@
             <i class="far fa-star"></i>
             <p class="category-item-name">Starred</p>
           </div>
-          <div class="count">{{ categoryService.getStarredCount() }}</div>
+          <div class="count">{{ (store.showStarred() | async).length }}</div>
         </li>
 
         <li class="list-item" (click)="showCompleted()">
@@ -70,10 +70,10 @@
             <i class="fa fa-check"></i>
             <p class="category-item-name">Completed</p>
           </div>
-          <div class="count">{{ categoryService.getCompletedCount() }}</div>
+          <div class="count">{{ (store.showCompleted() | async).length }}</div>
         </li>
 
-        <app-list-category-item *ngFor="let category of categories" [categoryEl]="category" (click)="categorySelectedFunc(category)"></app-list-category-item>
+        <app-list-category-item *ngFor="let category of categories$ | async" [categoryEl]="category" (click)="categorySelectedFunc(category)"></app-list-category-item>
 
       </ul>
     </div>

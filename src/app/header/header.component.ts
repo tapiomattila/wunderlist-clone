@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UtilityService } from '../app-services/utility/utility.service';
-import { Subscription } from 'rxjs';
-import { CategoryService } from '../app-services/sidepanel/category.service';
+import { Subscription, throwError } from 'rxjs';
+import { Store } from '../app-services/utility/store.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'app-header',
@@ -15,28 +16,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
     searchSub: Subscription;
     listSub: Subscription;
 
-    constructor(private utilityService: UtilityService,
-        private categoryService: CategoryService) { }
+    constructor(
+        private utilityService: UtilityService,
+        private store: Store) { }
 
     ngOnInit() {
 
-    /**
-    * Change the header selection text by search or category selection
-    */
-        this.searchSub = this.utilityService.searchChanged
+        /**
+        * Change the header selection text by search or category selection
+        */
+        this.searchSub = this.utilityService.search$
+            .pipe(
+                catchError(err => {
+                    console.log(`Error occurred search$: ${err}`);
+                    return throwError(err);
+                }))
             .subscribe(
                 (res: string) => {
                     this.headerText = res;
+                    console.log('show res IN HEADER:', res);
+                    if (res !== 'Inbox') {
+                        this.headerText = 'Search';
+                    }
                     if (res === '') {
                         this.headerText = 'Inbox';
                     }
-                },
-                (err: Error) => {
-                    console.log('SHOW ERROR search');
-                    console.log(err);
                 });
 
-        this.listSub = this.utilityService.listParamsChanged
+        this.listSub = this.utilityService.listParamsChanged$
+            .pipe(
+                catchError(err => {
+                    console.log(`Error occurred listParamsChanged: ${err}`);
+                    return throwError(err);
+                }))
             .subscribe(
                 (res: string) => {
                     if (res !== '') {
@@ -47,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                                 this.headerText = res.charAt(0).toUpperCase() + res.substring(1, res.length);
                             }
                             else {
-                                const selectedCategory = this.categoryService.getCategoryById(res);
+                                const selectedCategory = this.store.getCategoryById(res);
                                 if (selectedCategory) {
                                     this.headerText = selectedCategory.categoryName;
                                 }
@@ -57,11 +69,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
                     if (res === '') {
                         this.headerText = 'Inbox';
                     }
-                },
-                (err: Error) => {
-                    console.log('SHOW ERROR list');
-                    console.log(err);
                 });
+
     }
 
     ngOnDestroy() {

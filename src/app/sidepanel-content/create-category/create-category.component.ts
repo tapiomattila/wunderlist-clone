@@ -3,7 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/app-models/category.model';
 import { UtilityService } from 'src/app/app-services/utility/utility.service';
-import { CategoryService } from 'src/app/app-services/sidepanel/category.service';
+import { Store } from 'src/app/app-services/utility/store.service';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-create-category',
@@ -15,9 +17,10 @@ export class CreateCategoryComponent implements OnInit {
   newCategoryForm: FormGroup;
   @ViewChild('newCategoryInput') categoryInput: ElementRef;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private utilityService: UtilityService,
-    private categoryService: CategoryService) { }
+    private store: Store) { }
 
   ngOnInit() {
     document.querySelector('.modal-category').classList.toggle('open-category-modal');
@@ -31,7 +34,6 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   initForm() {
-
     this.newCategoryForm = new FormGroup({
       categoryName: new FormControl('', Validators.required)
     });
@@ -62,14 +64,18 @@ export class CreateCategoryComponent implements OnInit {
       createDate
     );
 
-    this.categoryService.addCategory(newCategory);
+    this.store.createCategory(newCategory)
+      .pipe(
+        catchError(err => {
+          console.log(`Error occurred createCategory: ${err}`);
+          return throwError(err);
+        }))
+      .subscribe(
+        () => console.log('new category created'),
+        err => console.log('Error creating category', err)
+      );
 
     this.clearInput();
-    this.closeModal();
-    this.routeBack();
-  }
-
-  deleteTodo() {
     this.closeModal();
     this.routeBack();
   }
@@ -79,6 +85,9 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   routeBack() {
+    this.utilityService.searchUsed = false;
+    this.utilityService.showSearchTodoCategory = false;
+
     this.router.navigate(['../']);
   }
 

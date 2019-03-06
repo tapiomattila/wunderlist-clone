@@ -21,7 +21,6 @@ export class ListItemComponent implements OnInit {
       else if (url.includes('completed')) { this.utilityService.setCurrentListChoiceUrlParams('completed'); }
       else {
         const id = res['id'];
-        this.utilityService.listCategorySelected = true;
         this.utilityService.setCurrentListChoiceUrlParams(id);
       }
     });

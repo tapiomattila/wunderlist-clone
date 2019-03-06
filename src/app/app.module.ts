@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -18,6 +19,9 @@ import { SearchInputComponent } from './sidepanel-search/search-input/search-inp
 import { ItemComponent } from './sidepanel-search/search-input/item/item.component';
 import { ListChoiceComponent } from './sidepanel-content/list-choice/list-choice.component';
 import { ListItemComponent } from './sidepanel-content/list-choice/list-item/list-item.component';
+
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryWebApiDataService } from './app-services/inmemorydata/in-memory-web-api-data.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,13 @@ import { ListItemComponent } from './sidepanel-content/list-choice/list-item/lis
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+
+    // in absense of a backend server, mock in memory server is used to mimic http calls
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryWebApiDataService, { dataEncapsulation: false }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

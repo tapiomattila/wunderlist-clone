@@ -1,60 +1,46 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoryService } from 'src/app/app-services/sidepanel/category.service';
 import { Category } from 'src/app/app-models/category.model';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UtilityService } from '../app-services/utility/utility.service';
-import { TodoService } from '../app-services/main-content/todo.service';
+import { Store } from '../app-services/utility/store.service';
 
 @Component({
   selector: 'app-sidepanel-content',
   templateUrl: './sidepanel-content.component.html',
   styleUrls: ['./sidepanel-content.component.scss']
 })
-export class SidepanelContentComponent implements OnInit, OnDestroy {
+export class SidepanelContentComponent implements OnInit {
 
-  categories: Category[];
-  categorySubs: Subscription;
+  categories$: Observable<Category[]>;
 
-  constructor(public categoryService: CategoryService,
-              private router: Router,
-              private utilService: UtilityService,
-              private todoService: TodoService) { }
+  constructor(
+    private router: Router,
+    private utilService: UtilityService,
+    public store: Store) { }
 
   ngOnInit() {
-    this.categories = this.categoryService.getCategories();
-
-    this.categorySubs = this.categoryService.categoriesChanged
-      .subscribe(
-        (categories: Category[]) => {
-          this.categories = categories;
-        });
+    this.categories$ = this.store.getCategories();
   }
 
   showAll() {
     console.log('showAll pressed');
     this.utilService.setCurrentListChoiceUrlParams('inbox');
-    this.utilService.listCategorySelected = false;
-    this.todoService.showTodosSubject.next('all');
-    this.todoService.todosChanged.next(this.todoService.getTodos());
+    this.store.selectCategory('all');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'inbox'] } }]);
   }
 
   showStarred() {
     console.log('showStarred pressed');
     this.utilService.setCurrentListChoiceUrlParams('starred');
-    this.utilService.listCategorySelected = false;
-    this.todoService.showTodosSubject.next('starred');
-    this.todoService.todosChanged.next(this.todoService.getTodos());
+    this.store.selectCategory('starred');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'starred'] } }]);
   }
 
   showCompleted() {
     console.log('showCompleted pressed');
     this.utilService.setCurrentListChoiceUrlParams('completed');
-    this.utilService.listCategorySelected = false;
-    this.todoService.showTodosSubject.next('completed');
-    this.todoService.todosChanged.next(this.todoService.getTodos());
+    this.store.selectCategory('completed');
     this.router.navigate(['', { outlets: { listsoutlet: ['list', 'completed'] } }]);
   }
 
@@ -72,22 +58,15 @@ export class SidepanelContentComponent implements OnInit, OnDestroy {
 
   createCategory() {
     console.log('create pressed');
-    this.router.navigate(['new-category']);
+    this.router.navigate(['todos', 'new-category']);
   }
 
   categorySelectedFunc(category: Category) {
     console.log('category selected');
-    this.utilService.listCategorySelected = true;
-    this.todoService.showTodosSubject.next(category.id);
-    this.todoService.todosChanged.next(this.todoService.getTodos());
+
+    this.utilService.setCurrentListChoiceUrlParams(category.categoryName);
+
+    this.store.selectCategory(category.id);
     this.router.navigate(['', { outlets: { listsoutlet: ['list', category.id] } }]);
   }
-
-
-  ngOnDestroy() {
-    if (this.categorySubs !== undefined) {
-      this.categorySubs.unsubscribe();
-    }
-  }
-
 }

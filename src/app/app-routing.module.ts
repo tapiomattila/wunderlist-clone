@@ -13,6 +13,7 @@ const appRoutes: Routes = [
     { path: '', redirectTo: '/todos', pathMatch: 'full' },
     { path: 'todos', component: MainContentComponent, children: [
             { path: ':id/edit', component: EditComponent },
+            { path: 'new-category', component: CreateCategoryComponent },
         ]
     },
     {
@@ -27,7 +28,6 @@ const appRoutes: Routes = [
         { path: 'completed', component: ListItemComponent },
         { path: ':id', component: ListItemComponent }
     ] },
-    { path: 'new-category', component: CreateCategoryComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 

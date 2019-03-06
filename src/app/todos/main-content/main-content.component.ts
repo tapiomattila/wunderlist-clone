@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Todo } from 'src/app/app-models/todo.model';
-import { TodoService } from 'src/app/app-services/main-content/todo.service';
 import { UtilityService } from 'src/app/app-services/utility/utility.service';
 import { Router } from '@angular/router';
-import { TodoListShowService } from 'src/app/app-services/main-content/todo-list-show.service';
+import { Store } from 'src/app/app-services/utility/store.service';
 
 @Component({
   selector: 'app-main-content',
@@ -14,26 +13,61 @@ import { TodoListShowService } from 'src/app/app-services/main-content/todo-list
 })
 export class MainContentComponent implements OnInit, OnDestroy {
 
-  todos: Todo[];
-  todoSubscription: Subscription;
-  searchSubscription: Subscription;
+  todos$: Observable<Todo[]>;
   todoForm: FormGroup;
+  searchSubscription: Subscription;
 
   id: string;
   editMode: boolean = false;
   selectedTodo: Todo;
 
-  constructor(private todoService: TodoService,
+  private customCategorySelected: boolean = false;
+
+  constructor(
     private utilService: UtilityService,
     private router: Router,
-    private todoListShowService: TodoListShowService) { }
+    private store: Store) { }
 
   ngOnInit() {
+    this.todos$ = this.store.showInbox();
 
-    const todos = this.todoService.getTodos();
-    this.todos = todos.filter(el => el.deleted === false);
-    this.showCategorySelectedTodos();
-    this.showTodosBySearchResult();
+    this.store.selCategory$.subscribe(res => {
+      console.log('show res in sel category: ', res);
+      if (res === 'all') {
+        console.log('ALL');
+        this.customCategorySelected = false;
+        this.utilService.showSearchTodoCategory = false;
+        this.todos$ = this.store.showInbox();
+      }
+      else if (res === 'starred') {
+        console.log('STARRED');
+        this.customCategorySelected = false;
+        this.utilService.showSearchTodoCategory = false;
+        this.todos$ = this.store.showStarred();
+      }
+      else if (res === 'completed') {
+        console.log('COMPLETED');
+        this.customCategorySelected = false;
+        this.utilService.showSearchTodoCategory = false;
+        this.todos$ = this.store.showCompleted();
+      }
+      else {
+        console.log('res custom: ', res);
+        this.customCategorySelected = true;
+        this.utilService.showSearchTodoCategory = false;
+        this.todos$ = this.store.showCustomCategoryContent(res);
+      }
+    });
+
+    this.searchSubscription = this.utilService.search$.subscribe(res => {
+      if (this.utilService.searchUsed) {
+        console.log('search res', res);
+        this.utilService.searchUsed = false;
+        this.todos$ = this.store.showSearchTermTodos(res);
+      }
+
+    });
+
     this.initForm();
   }
 
@@ -55,32 +89,9 @@ export class MainContentComponent implements OnInit, OnDestroy {
     }
     else {
 
-      // created category selected, give this category for the given todo
-      if (this.utilService.listCategorySelected) {
-        this.todoService.showTodosSubject.subscribe(
-          (res: string) => {
-            const formValue = this.todoForm.controls.todo.value;
-            if (formValue === null || formValue === '') { return; }
-            const uniqId = this.utilService.createUUID();
-            const createdDate = new Date();
-            const editDate = new Date();
-            const todo = new Todo(
-              uniqId,
-              formValue,
-              createdDate,
-              editDate,
-              false,
-              res,
-              false,
-              false
-            );
+      // if custom category is NOT selected
+      if (!this.customCategorySelected) {
 
-            this.todoService.addTodo(todo);
-            this.clearInput();
-          }
-        );
-      }
-      else {
         const formValue = this.todoForm.controls.todo.value;
         const uniqId = this.utilService.createUUID();
         const createdDate = new Date();
@@ -94,7 +105,46 @@ export class MainContentComponent implements OnInit, OnDestroy {
           '',
           false,
           false);
-        this.todoService.addTodo(todo);
+
+        this.store.addTodo(todo)
+          .subscribe(
+            () => console.log('new todo added'),
+            err => console.log('Error adding todo', err)
+          );
+
+        this.clearInput();
+      }
+      else {
+
+        let categoryId = '';
+        this.store.selCategory$.subscribe(res => categoryId = res);
+
+        const formValue = this.todoForm.controls.todo.value;
+
+        if (formValue === null || formValue === '') { return; }
+
+        const uniqId = this.utilService.createUUID();
+        const createdDate = new Date();
+        const editDate = new Date();
+        const todo = new Todo(
+          uniqId,
+          formValue,
+          createdDate,
+          editDate,
+          false,
+          categoryId,
+          false,
+          false
+        );
+
+        this.store.addTodo(todo)
+          .subscribe(
+            (res2) => console.log('new todo added', res2),
+            err => console.log('Error adding todo', err)
+          );
+
+        this.todos$ = this.store.showCustomCategoryContent(categoryId);
+
         this.clearInput();
       }
     }
@@ -115,88 +165,11 @@ export class MainContentComponent implements OnInit, OnDestroy {
 
   focusOutTodoInput() {
     console.log('focus out in todo input');
+    this.customCategorySelected = false;
     this.router.navigate(['../']);
   }
 
-  showCategorySelectedTodos() {
-    // Show only todos that have not been deleted (soft delete)
-    this.todoSubscription = this.todoService.todosChanged
-      .subscribe(
-        () => {
-
-          return this.todoService.showTodosSubject
-            .subscribe(
-              (res: string) => {
-                if (res === 'all') { this.todos = this.todoListShowService.showAllTodos(); }
-                else if (res === 'starred') { this.todos = this.todoListShowService.showStarredTodos(); }
-                else if (res === 'completed') { this.todos = this.todoListShowService.showCompletedTodos(); }
-                else if (this.utilService.listCategorySelected) {
-                  this.todos = this.todoListShowService.showSelectedCategoryFilterTodos(res);
-                }
-                else {
-                  this.todos = [];
-                  console.error('SOMETHING WENT WRONG IN TODOS LIST, empty list');
-                }
-              },
-              (err: Error) => {
-                console.log('show error in main content showTodosSubject');
-                console.log(err);
-                console.log(err.message);
-              });
-        },
-        (err: Error) => {
-          console.log('show error in main content todosChanged');
-          console.log(err);
-          console.log(err.message);
-        });
-  }
-
-  showTodosBySearchResult() {
-    this.searchSubscription = this.utilService.searchChanged
-      .subscribe(
-        (res: string) => {
-
-          let searchResult = '';
-          const searchInputLower = res.toLowerCase();
-
-          if (searchInputLower !== 'inbox' &&
-            searchInputLower !== 'starred' &&
-            searchInputLower !== 'completed') {
-            searchResult = searchInputLower;
-          }
-          switch (res) {
-            case 'inbox':
-              this.todos = this.todoListShowService.showAllTodos();
-              break;
-            case 'starred':
-              this.todos = this.todoListShowService.showStarredTodos();
-              break;
-            case 'completed':
-              this.todos = this.todoListShowService.showCompletedTodos();
-              break;
-            case '':
-              this.todos = this.todoListShowService.showAllTodos();
-              break;
-            case searchResult:
-              this.todos = this.todoListShowService.showSearchResultCategories(res);
-              break;
-            default:
-              this.todos = this.todoListShowService.showAllTodos();
-              break;
-          }
-        },
-        (err: Error) => {
-          console.log('SHOW ERROR search');
-          console.log(err);
-          console.log(err.message);
-        });
-  }
-
   ngOnDestroy() {
-    if (this.todoSubscription !== undefined) {
-      this.todoSubscription.unsubscribe();
-    }
-
     if (this.searchSubscription !== undefined) {
       this.searchSubscription.unsubscribe();
     }

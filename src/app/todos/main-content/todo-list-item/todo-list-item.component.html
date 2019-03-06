@@ -1,13 +1,15 @@
-<li (dblclick)="doubleClickPressed(todoEl)" >
+<li (dblclick)="doubleClickPressed(todoEl)">
   <div class="todo-item">
     <label class="todo-item__checkbox">
-        <input type="checkbox" (click)="checked(todoEl)" [checked]="todoEl.completed">
-        <span class="icon"></span>
-        <span class="list">{{ todoEl.name }}</span>
+      <input type="checkbox" (click)="checked(todoEl)" [checked]="todoEl.completed">
+      <span class="icon"></span>
+      <span class="list">{{ todoEl.name }}</span>
     </label>
+    <h3 *ngIf="utilService.showSearchTodoCategory && todoCategory">{{ todoCategory.categoryName }}</h3>
+
     <div class="todo-item__icons">
-        <i class="fa fa-pen pen" (click)="doubleClickPressed(todoEl)"></i>
-        <i class="fa fa-star" (click)="starred(todoEl)" [ngClass]="{ 'star-filled': getStarredColor(todoEl) === true }"></i>
+      <i class="fa fa-pen pen" (click)="doubleClickPressed(todoEl)"></i>
+      <i class="fa fa-star" (click)="starred(todoEl)" [ngClass]="{ 'star-filled': getStarredColor(todoEl) === true }"></i>
     </div>
   </div>
 </li>

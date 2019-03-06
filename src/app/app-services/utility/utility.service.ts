@@ -7,13 +7,15 @@ import { BehaviorSubject } from 'rxjs';
 export class UtilityService {
 
     // Search
-    searchChanged = new BehaviorSubject('Inbox');
+    private searchChanged = new BehaviorSubject('Inbox');
+    search$ = this.searchChanged.asObservable();
+    searchUsed: boolean = false;
+    showSearchTodoCategory: boolean = false;
     // --------------------------------------------
 
     // List choice (category)
-    listParamsChanged = new BehaviorSubject('Inbox');
-    listCategorySelected: boolean = false;
-    changeListHeader: boolean = false;
+    private listParamsChanged = new BehaviorSubject('Inbox');
+    listParamsChanged$ = this.listParamsChanged.asObservable();
     // --------------------------------------------
 
     private minifyCreateCategoryListObj = {

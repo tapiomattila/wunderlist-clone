@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilityService } from 'src/app/app-services/utility/utility.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TodoService } from '../app-services/main-content/todo.service';
-import { CategoryService } from '../app-services/sidepanel/category.service';
+import { Store } from '../app-services/utility/store.service';
 
 @Component({
     selector: 'app-sidepanel-search',
@@ -15,15 +14,13 @@ export class SidePanelSearchComponent implements OnInit {
 
     searchForm: FormGroup;
 
-    filteredStatus: string = '';
-
-    constructor(private utilService: UtilityService,
+    constructor(
+        private utilService: UtilityService,
         private router: Router,
-        private todoService: TodoService,
-        private categoryService: CategoryService) { }
+        private store: Store
+    ) { }
 
     ngOnInit() {
-
         this.initForm();
     }
 
@@ -130,33 +127,34 @@ export class SidePanelSearchComponent implements OnInit {
 
     focusSearch() {
         console.log('focus search');
-        console.log(this.router.url);
         this.router.navigate(['', { outlets: { ssoutlet: ['search'] } }]);
     }
 
     focusOutSearch() {
         console.log('focus out in search');
         const value = this.searchForm.controls.searchInput.value;
-        console.log(value);
         if (value === '') {
             this.utilService.setCurrentSearchUrlParams('Inbox');
         }
+        this.searchForm.setValue({
+            searchInput: ''
+        });
         this.router.navigate([{ outlets: { ssoutlet: null } }]);
     }
 
     onSubmit() {
         const value = this.searchForm.controls.searchInput.value;
-        const category = this.categoryService.getCategories()
-                            .find(el => el.categoryName === value);
-        if (category) {
-            this.utilService.listCategorySelected = true;
-            this.todoService.showTodosSubject.next(category.id);
+        console.log('show search value');
+        console.log(value);
+
+        if (value === '') {
+            this.store.selectCategory('all');
         }
         else {
-            this.utilService.listCategorySelected = false;
-            this.todoService.showTodosSubject.next('all');
+            this.utilService.searchUsed = true;
+            this.utilService.showSearchTodoCategory = true;
+            this.store.showSearchTermTodos(value);
         }
-
         this.router.navigate(['', { outlets: { ssoutlet: ['search', value] } }]);
     }
 

@@ -16,8 +16,6 @@ export class ItemComponent implements OnInit {
     this.route.params.subscribe(res => {
       const id = res['id'];
       this.utilityService.setCurrentSearchUrlParams(id);
-      console.log('SHOW ITEM');
-      this.utilityService.changeListHeader = true;
     });
   }
 

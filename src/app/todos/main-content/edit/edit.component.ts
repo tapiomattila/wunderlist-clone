@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Todo } from 'src/app/app-models/todo.model';
-import { TodoService } from 'src/app/app-services/main-content/todo.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UtilityService } from 'src/app/app-services/utility/utility.service';
-import { CategoryService } from 'src/app/app-services/sidepanel/category.service';
+import { Store } from 'src/app/app-services/utility/store.service';
 
 @Component({
   selector: 'app-edit',
@@ -20,10 +18,8 @@ export class EditComponent implements OnInit {
   todoEditForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private todoService: TodoService,
-              private utilService: UtilityService,
-              private categoryService: CategoryService) { }
+    private router: Router,
+    private store: Store) { }
 
   ngOnInit() {
     document.querySelector('.modal-edit').classList.toggle('open-edit-modal');
@@ -38,15 +34,15 @@ export class EditComponent implements OnInit {
         this.id = params['id'];
       });
 
-    const todos = this.todoService.getTodos();
-    this.editTodo = todos.find(res => res.id === this.id);
-    this.initForm();
+    this.store.getTodoById(this.id)
+      .subscribe(res => {
+        this.editTodo = res;
+        this.initForm();
+      });
   }
 
   initForm() {
-
     const todo = this.editTodo;
-
     this.todoEditForm = new FormGroup({
       editTodo: new FormControl(todo.name, Validators.required)
     });
@@ -79,7 +75,8 @@ export class EditComponent implements OnInit {
       oldTodo.completed
     );
 
-    this.todoService.updateTodo(oldTodo.id, editTodo);
+    this.store.editTodo(editTodo)
+      .subscribe(res => console.log('res in edit todo: ', res));
 
     this.clearInput();
     this.closeModal();
@@ -87,7 +84,7 @@ export class EditComponent implements OnInit {
   }
 
   deleteTodo() {
-    this.todoService.softDeleteTodo(this.editTodo);
+    this.store.softDeleteTodo(this.editTodo).subscribe();
 
     this.closeModal();
     this.routeBack();

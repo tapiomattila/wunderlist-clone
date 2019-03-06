@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Category } from 'src/app/app-models/category.model';
-import { CategoryService } from 'src/app/app-services/sidepanel/category.service';
+import { Store } from 'src/app/app-services/utility/store.service';
 
 @Component({
   selector: 'app-list-category-item',
@@ -11,7 +11,7 @@ export class ListCategoryItemComponent implements OnInit {
 
   @Input() categoryEl: Category;
 
-  constructor(public categoryService: CategoryService) { }
+  constructor(public store: Store) { }
 
   ngOnInit() {
   }
