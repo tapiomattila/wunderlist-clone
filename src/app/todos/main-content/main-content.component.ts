@@ -29,6 +29,13 @@ export class MainContentComponent implements OnInit, OnDestroy {
     private store: Store) { }
 
   ngOnInit() {
+    this.utilService.setSidePanelObjects();
+    if (window.innerWidth < 515) {
+      document.querySelector('.menu-btn').classList.add('opaque-hamburger');
+      this.utilService.addSidePanelClose();
+      this.utilService.removeSidePanelInfoOnSmallScreen();
+    }
+
     this.todos$ = this.store.showInbox();
 
     this.store.selCategory$.subscribe(res => {
@@ -167,6 +174,22 @@ export class MainContentComponent implements OnInit, OnDestroy {
     console.log('focus out in todo input');
     this.customCategorySelected = false;
     this.router.navigate(['../']);
+  }
+
+  resizeFunc(event) {
+    const e = event.target.innerWidth;
+    console.log('listened resize event:', e);
+    if (e <= 515) {
+      document.querySelector('.menu-btn').classList.add('opaque-hamburger');
+      this.utilService.addSidePanelClose();
+      this.utilService.removeSidePanelInfoOnSmallScreen();
+    }
+    else {
+      document.querySelector('.menu-btn').classList.remove('opaque-hamburger');
+      this.utilService.setSidePanelObjects();
+      this.utilService.removeSidePanelClose();
+      this.utilService.addSidePanelInfoOnLargerScreen();
+    }
   }
 
   ngOnDestroy() {

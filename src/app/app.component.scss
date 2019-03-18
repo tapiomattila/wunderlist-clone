@@ -6,7 +6,7 @@
     'sidepanel-search header'
     'sidepanel-content maincontent';
 
-    grid-template-columns: 25rem 1fr;
+    grid-template-columns: 25rem minmax(25rem, 1fr);
     grid-template-rows: 5rem 1fr;
 
     &.close {
@@ -67,5 +67,29 @@ app-header {
         z-index: 1500;
         background: rgba(rgb(100, 100, 100), .7);
     
+    }
+}
+
+@media (max-width: 515px) {
+
+    .app-container {
+
+        display: grid;
+        grid-template-areas:
+        'sidepanel-search sidepanel-search'
+        'header header'
+        'sidepanel-content maincontent';
+
+        grid-template-columns: 25rem minmax(25rem, 1fr);
+        grid-template-rows: 5rem 5rem 1fr;
+
+        &.close {
+            grid-template-columns: 4rem 1fr;
+        }
+    }
+
+    app-todos {
+        top: 10rem;
+        min-height: calc(100vh - 10rem);
     }
 }

@@ -9,9 +9,19 @@
         margin: 0;
         min-height: 100%;
         max-height: 100000rem; // 1 000 000px
+        min-width: 25rem;
         position: relative;
+        overflow-x: hidden;
         
         &__input-container {
+
+            .testScreenPopup {
+                display: none;
+
+                &.dispay-popup {
+                    display: block;
+                }
+            }
 
             // background: #7D9875;
             padding: 1.5rem .7rem 0 .7rem;

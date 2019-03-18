@@ -1,5 +1,6 @@
 <div class="main-content">
   <div class="main-content__input-container">
+    <div (window:resize)="resizeFunc($event)"></div>
     <form class="form-container" [formGroup]='todoForm' (ngSubmit)="onSubmit()">
       <div class="input">
         <input type="text" placeholder="Add a to-do..." formControlName="todo" (focus)="focusInput()" (focusout)="focusOutTodoInput()">
